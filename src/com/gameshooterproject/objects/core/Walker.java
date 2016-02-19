@@ -46,11 +46,11 @@ public abstract class Walker extends GameObject {
     }
 
     public void speedUpForward(){
-        vel = 2;
+        vel = 4;
     }
 
     public void speedUpBackward(){
-        vel = -2;
+        vel = -4;
     }
 
     public int getVel() {
