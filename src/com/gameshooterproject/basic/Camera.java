@@ -1,6 +1,5 @@
 package com.gameshooterproject.basic;
 
-import com.gameshooterproject.main.Window;
 import com.gameshooterproject.objects.Player;
 import com.gameshooterproject.objects.core.GameObject;
 
@@ -11,67 +10,45 @@ public class Camera {
     public LinkedList<GameObject> objectList;
 
     public Camera() {
-        objectList = new LinkedList<GameObject>();
+        objectList = new LinkedList<>();
     }
 
     public void update(){
-        Player player = (Player) getPlayerObject();
-        int playerDirection = player.getDirection();
-        int playerVel = player.getVel();
+        Player player = getPlayerObject();
 
         if(player.isPlayerCentered()){
-            for(int i = 0; i < objectList.size(); i++){
-                GameObject tempObject = objectList.get(i);
-                if(tempObject.getId() != ID.Player){
-//                    int objectActualY = tempObject.getY();
-                    
-//                    tempObject.setX((int)((tempObject.getX())+(player.getVel() * Math.sin(Math.toRadians(player.getDirection())))));
-                }
-            }
-        }
-
-        if(screenBorderConnectsWithMapBorders()){
-            player.setPlayerCentered(false);
+            moveEveryObjectExceptPlayer(player);
         }else{
-            player.setPlayerCentered(true);
+            movePlayer(player);
         }
     }
 
-    private boolean screenBorderConnectsWithMapBorders() {
-        GameObject player = getPlayerObject();
-        GameObject gameMap = getObject(ID.Map);
-        int screenHalfWidth = (Window.WIDTH / 2);
-        int screenHalfHeight = (Window.HEIGHT / 2);
+    private void movePlayer(Player player) {
+        player.moveByOffset(player.getOffsetX(), player.getOffsetY());
+    }
 
-        //TODO
+    private void moveObject(GameObject object){
+        object.moveByOffset(1 ,1);
+    }
 
-        int playerDistanceToMapTop = (player.getY()) - (player.getHeight() / 2) - gameMap.getY();
-        int playerDistanceToMapBottom = (gameMap.getY() + gameMap.getHeight()) - (player.getY()) - (player.getHeight() / 2);
-        int playerDistanceToMapLeft = (player.getX()) - (player.getWidth() / 2) - gameMap.getX();
-        int playerDistanceToMapRight = (gameMap.getX() + gameMap.getWidth()) - (player.getX()) - (player.getWidth() / 2);
+    private void moveEveryObjectExceptPlayer(Player player) {
+        for(int i=0; i < objectList.size(); i++){
+            GameObject object = objectList.get(i);
 
-        if(playerDistanceToMapTop <= screenHalfHeight){
-            return true;
+            if(object.getId() != ID.Player){
+                int offsetX = (-1) * player.getOffsetX();
+                int offsetY = (-1) * player.getOffsetY();
+                object.moveByOffset(offsetX, offsetY);
+            }
         }
-        if(playerDistanceToMapBottom <= screenHalfHeight){
-            return true;
-        }
-        if(playerDistanceToMapLeft <= screenHalfWidth){
-            return true;
-        }
-        if(playerDistanceToMapRight <= screenHalfWidth){
-            return true;
-        }
-
-        return false;
     }
 
     public void addNewObject(GameObject object){
         objectList.add(object);
     }
 
-    public GameObject getPlayerObject(){
-        return getObject(ID.Player);
+    public Player getPlayerObject(){
+        return (Player) getObject(ID.Player);
     }
 
     private GameObject getObject(ID id){

@@ -28,7 +28,7 @@ public class GameMap extends GameObject {
 
     @Override
     public void update() {
-
+//        moveByOffset(1, 1);
     }
 
     @Override

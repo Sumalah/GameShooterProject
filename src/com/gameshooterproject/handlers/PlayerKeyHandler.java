@@ -38,6 +38,9 @@ public class PlayerKeyHandler extends KeyAdapter{
         if(key == KeyEvent.VK_RIGHT) {
             keyRight = true;
         }
+        if(key == KeyEvent.VK_ESCAPE){
+            System.exit(1);
+        }
 
         if(keyLeft){
             int actualPlayerDirection = playerObject.getDirection();

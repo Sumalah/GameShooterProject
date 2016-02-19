@@ -22,6 +22,11 @@ public abstract class GameObject {
     public abstract void update();
     public abstract void draw(Graphics g);
 
+    public void moveByOffset(int offsetX, int offsetY){
+        x += offsetX;
+        y += offsetY;
+    }
+
     public int getX() {
         return x;
     }

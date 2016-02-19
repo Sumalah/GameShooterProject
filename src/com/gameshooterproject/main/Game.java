@@ -17,14 +17,17 @@ public class Game extends Canvas {
     public Game(){
         mainLoop = new MainLoop(this);
         new Window(mainLoop);
-        camera = new Camera();
         initGameObjects();
         initHandlers();
     }
 
     private void initGameObjects() {
+        camera = new Camera();
         gameMap = new GameMap(0, 0, 0, 0, ID.Map);
-        player = new Player(0, 0, 50, 20, ID.Player);
+        player = new Player(0, 0, 50, 20, ID.Player, gameMap);
+
+        camera.addNewObject(gameMap);
+        camera.addNewObject(player);
     }
 
     private void initHandlers() {
@@ -36,7 +39,8 @@ public class Game extends Canvas {
     }
 
     public void update(){
-        player.update();
+        player.update();  // prawdopodobnie to musi byæ pierwsze
+        gameMap.update();
         camera.update();
     }
 
@@ -45,9 +49,6 @@ public class Game extends Canvas {
     }
 
     private void buildBasicScene(Graphics g) {
-        camera.addNewObject(gameMap);
-        camera.addNewObject(player);
-
         gameMap.draw(g);
         player.draw(g);
     }
