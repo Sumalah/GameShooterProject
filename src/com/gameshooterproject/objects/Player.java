@@ -29,7 +29,12 @@ public class Player extends Walker {
 
     @Override
     public void update() {
+        rotatePlayer();
         updateWalkerOffset();
+    }
+
+    private void rotatePlayer() {
+        setDirection(getDirection() + turning);
     }
 
     @Override

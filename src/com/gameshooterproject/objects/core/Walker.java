@@ -6,11 +6,13 @@ public abstract class Walker extends GameObject {
     protected int vel;
     protected int direction;
     protected int offsetX, offsetY;
+    protected int turning;
 
     public Walker(int x, int y, int width, int height, ID id) {
         super(x, y, width, height, id);
         vel = 0;
         direction = 180;
+        turning = 0;
     }
 
     public int getDirection() {
@@ -56,6 +58,18 @@ public abstract class Walker extends GameObject {
 
     public void speedUpBackward(){
         vel = -4;
+    }
+
+    public void turnLeft(){
+        turning = 2;
+    }
+
+    public void turnRight(){
+        turning = -2;
+    }
+
+    public void stopTurning(){
+        turning = 0;
     }
 
     public int getVel() {

@@ -31,23 +31,25 @@ public class PlayerKeyHandler extends KeyAdapter{
             keyDown = true;
         }
         if(key == KeyEvent.VK_LEFT) {
+            player.turnLeft();
             keyLeft = true;
         }
         if(key == KeyEvent.VK_RIGHT) {
+            player.turnRight();
             keyRight = true;
         }
         if(key == KeyEvent.VK_ESCAPE){
             System.exit(1);
         }
 
-        if(keyLeft){
-            int actualPlayerDirection = player.getDirection();
-            player.setDirection(actualPlayerDirection + 10);
-        }
-        if(keyRight){
-            int actualPlayerDirection = player.getDirection();
-            player.setDirection(actualPlayerDirection - 10);
-        }
+//        if(keyLeft){
+//            int actualPlayerDirection = player.getDirection();
+//            player.setDirection(actualPlayerDirection + 10);
+//        }
+//        if(keyRight){
+//            int actualPlayerDirection = player.getDirection();
+//            player.setDirection(actualPlayerDirection - 10);
+//        }
     }
 
     public void keyReleased(KeyEvent e){
@@ -60,14 +62,17 @@ public class PlayerKeyHandler extends KeyAdapter{
             keyDown = false;
         }
         if(key == KeyEvent.VK_LEFT) {
+            player.stopTurning();
             keyLeft = false;
         }
         if(key == KeyEvent.VK_RIGHT) {
+            player.stopTurning();
             keyRight = false;
         }
 
         if(!keyUp && !keyDown){
             player.stop();
         }
+
     }
 }
