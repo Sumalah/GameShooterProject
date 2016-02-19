@@ -7,48 +7,29 @@ import com.gameshooterproject.objects.core.Walker;
 import java.awt.*;
 
 public class Player extends Walker {
-    private boolean playerVerticalCentered;
-    private boolean playerHorizontalCentered;
-    private GameMap gameMap;
-    private int offsetX, offsetY;
 
-    public Player(int x, int y, int width, int height, ID id, GameMap gameMap) {
+    private boolean playerCenterVertically;
+    private boolean playerCenterHorizontally;
+
+    public Player(int x, int y, int width, int height, ID id) {
         super(x, y, width, height, id);
-        this.gameMap = gameMap;
-
         centerPlayer();
-
-        offsetX = this.x;
-        offsetY = this.y;
     }
 
     public void centerPlayer() {
+        setCoordinatesToWindowCenter();
+        setPlayerCenterHorizontally(true);
+        setPlayerCenterVertically(true);
+    }
+
+    private void setCoordinatesToWindowCenter() {
         x = (Window.WIDTH / 2) - (width / 2) - 2;
         y = (Window.HEIGHT / 2) - (height / 2) - 2;
-        setPlayerHorizontalCentered(true);
-        setPlayerVerticalCentered(true);
-    }
-
-    public void setPlayerVerticalCentered(Boolean value){
-        playerVerticalCentered = value;
-    }
-
-    public boolean isPlayerVerticalCentered(){
-        return playerVerticalCentered;
-    }
-
-    public void setPlayerHorizontalCentered(Boolean value){
-        playerHorizontalCentered = value;
-    }
-
-    public boolean isPlayerHorizontalCentered(){
-        return playerHorizontalCentered;
     }
 
     @Override
     public void update() {
-        offsetX = (int)(vel * Math.sin(Math.toRadians(direction)));
-        offsetY = (int)(vel * Math.cos(Math.toRadians(direction)));
+        updateWalkerOffset();
     }
 
     @Override
@@ -58,20 +39,21 @@ public class Player extends Walker {
         g2d.rotate(Math.toRadians(-1 * direction), x + (width/2), y + (height / 2));
         g2d.fillOval(x, y, width, height);
     }
+//================GETTERS - SETTERS================//
 
-    public int getOffsetX() {
-        return offsetX;
+    public void setPlayerCenterVertically(Boolean value){
+        playerCenterVertically = value;
     }
 
-    public void setOffsetX(int offsetX) {
-        this.offsetX = offsetX;
+    public boolean isPlayerCenterVertically(){
+        return playerCenterVertically;
     }
 
-    public int getOffsetY() {
-        return offsetY;
+    public void setPlayerCenterHorizontally(Boolean value){
+        playerCenterHorizontally = value;
     }
 
-    public void setOffsetY(int offsetY) {
-        this.offsetY = offsetY;
+    public boolean isPlayerCenterHorizontally(){
+        return playerCenterHorizontally;
     }
 }

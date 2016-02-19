@@ -5,6 +5,7 @@ import com.gameshooterproject.basic.ID;
 public abstract class Walker extends GameObject {
     protected int vel;
     protected int direction;
+    protected int offsetX, offsetY;
 
     public Walker(int x, int y, int width, int height, ID id) {
         super(x, y, width, height, id);
@@ -44,6 +45,10 @@ public abstract class Walker extends GameObject {
 //        }, 300, 300);
         vel = 0;
     }
+    protected void updateWalkerOffset() {
+        offsetX = (int)(vel * Math.sin(Math.toRadians(direction)));
+        offsetY = (int)(vel * Math.cos(Math.toRadians(direction)));
+    }
 
     public void speedUpForward(){
         vel = 4;
@@ -59,5 +64,21 @@ public abstract class Walker extends GameObject {
 
     public void setVel(int vel) {
         this.vel = vel;
+    }
+
+    public void setOffsetX(int offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
     }
 }

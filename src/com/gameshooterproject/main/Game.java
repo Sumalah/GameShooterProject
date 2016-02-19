@@ -1,6 +1,9 @@
 package com.gameshooterproject.main;
 
 import com.gameshooterproject.basic.Camera;
+import com.gameshooterproject.basic.GameMapHolder;
+import com.gameshooterproject.basic.WalkersHolder;
+import com.gameshooterproject.handlers.CollisionHandler;
 import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.handlers.PlayerKeyHandler;
 import com.gameshooterproject.objects.GameMap;
@@ -10,6 +13,9 @@ import java.awt.*;
 
 public class Game extends Canvas {
     MainLoop mainLoop;
+    CollisionHandler collisionHandler;
+    GameMapHolder gameMapHolder;
+    WalkersHolder walkersHolder;
     GameMap gameMap;
     Player player;
     Camera camera;
@@ -17,21 +23,22 @@ public class Game extends Canvas {
     public Game(){
         mainLoop = new MainLoop(this);
         new Window(mainLoop);
+
         initGameObjects();
         initHandlers();
     }
 
     private void initGameObjects() {
-        camera = new Camera();
+        player = new Player(0, 0, 20, 50, ID.Player);
         gameMap = new GameMap(0, 0, 0, 0, ID.Map);
-        player = new Player(0, 0, 50, 20, ID.Player, gameMap);
-
-        camera.addNewObject(gameMap);
-        camera.addNewObject(player);
+        gameMapHolder = new GameMapHolder(gameMap);
+        walkersHolder = new WalkersHolder(player);
+        camera = new Camera(gameMapHolder, walkersHolder);
     }
 
     private void initHandlers() {
-        mainLoop.addKeyListener(new PlayerKeyHandler(camera));
+        mainLoop.addKeyListener(new PlayerKeyHandler(player));
+        collisionHandler = new CollisionHandler(gameMapHolder, walkersHolder);
     }
 
     public static void main(String[] args) {
@@ -39,8 +46,9 @@ public class Game extends Canvas {
     }
 
     public void update(){
-        player.update();  // prawdopodobnie to musi byæ pierwsze
-        gameMap.update();
+        gameMapHolder.update();
+        walkersHolder.update();
+        collisionHandler.update();
         camera.update();
     }
 
