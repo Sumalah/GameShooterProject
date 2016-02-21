@@ -2,7 +2,7 @@ package com.gameshooterproject.objects.core;
 
 import com.gameshooterproject.basic.ID;
 
-public abstract class Walker extends GameObject {
+public abstract class Walker extends GameObject { //they had to be circles
     protected int vel;
     protected int direction;
     protected int offsetX, offsetY;
@@ -53,19 +53,19 @@ public abstract class Walker extends GameObject {
     }
 
     public void speedUpForward(){
-        vel = 4;
+        vel = 5;
     }
 
     public void speedUpBackward(){
-        vel = -4;
+        vel = -5;
     }
 
     public void turnLeft(){
-        turning = 2;
+        turning = 3;
     }
 
     public void turnRight(){
-        turning = -2;
+        turning = -3;
     }
 
     public void stopTurning(){

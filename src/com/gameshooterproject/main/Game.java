@@ -30,7 +30,7 @@ public class Game extends Canvas {
     }
 
     private void initGameObjects() {
-        player = new Player(0, 0, 20, 50, ID.Player);
+        player = new Player(0, 0, 50, 50, ID.Player);
         walkersHolder = new WalkersHolder(player);
 
         gameMap = new GameMap(0, 0, 0, 0, ID.Map);

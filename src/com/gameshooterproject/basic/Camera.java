@@ -100,10 +100,6 @@ public class Camera {
         }
     }
 
-    public void addNewObject(GameObject object){
-        allObjectsList.add(object);
-    }
-
     private GameObject getObject(ID id){
         for (int i = 0; i < allObjectsList.size(); i++){
             GameObject tempObject = allObjectsList.get(i);

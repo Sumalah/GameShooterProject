@@ -43,6 +43,7 @@ public class Player extends Walker {
         g2d.setColor(Color.WHITE);
         g2d.rotate(Math.toRadians(-1 * direction), x + (width/2), y + (height / 2));
         g2d.fillOval(x, y, width, height);
+        g2d.fillRect(x+(width/2)-3, y+height - 5, 5, 20);
     }
 //================GETTERS - SETTERS================//
 
