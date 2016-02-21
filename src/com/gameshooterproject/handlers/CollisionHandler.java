@@ -4,6 +4,7 @@ import com.gameshooterproject.basic.GameMapHolder;
 import com.gameshooterproject.basic.WalkersHolder;
 import com.gameshooterproject.objects.GameMap;
 import com.gameshooterproject.objects.Player;
+import com.gameshooterproject.objects.core.GameObject;
 import com.gameshooterproject.objects.core.Walker;
 
 import java.util.LinkedList;
@@ -27,6 +28,23 @@ public class CollisionHandler {
 
     private void handleCollisions() {
         keepWalkersInGameMap();
+        keepWalkersAwayFromObstacles();
+    }
+
+    private void keepWalkersAwayFromObstacles() {
+        LinkedList<Walker> walkerLinkedList = walkersHolder.getWalkerObjectsList();
+        LinkedList<GameObject> mapObjectsList = gameMapHolder.getMapObjectsList();
+
+        for(int i = 0; i < walkerLinkedList.size(); i++){
+            Walker tempWalker = walkerLinkedList.get(i);
+
+            for(int j = 0; j < mapObjectsList.size(); j++){
+                GameObject tempMapObject = mapObjectsList.get(j);
+
+                //TODO
+                //BTW what if obstacle will have direction var?
+            }
+        }
     }
 
     private void keepWalkersInGameMap() {

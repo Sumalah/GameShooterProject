@@ -8,6 +8,7 @@ import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.handlers.PlayerKeyHandler;
 import com.gameshooterproject.objects.GameMap;
 import com.gameshooterproject.objects.Player;
+import com.gameshooterproject.objects.mapelements.MapObstacle;
 
 import java.awt.*;
 
@@ -30,10 +31,17 @@ public class Game extends Canvas {
 
     private void initGameObjects() {
         player = new Player(0, 0, 20, 50, ID.Player);
+        walkersHolder = new WalkersHolder(player);
+
         gameMap = new GameMap(0, 0, 0, 0, ID.Map);
         gameMapHolder = new GameMapHolder(gameMap);
-        walkersHolder = new WalkersHolder(player);
+        makeGameLevel();
+
         camera = new Camera(gameMapHolder, walkersHolder);
+    }
+
+    private void makeGameLevel() {
+        gameMapHolder.addNewMapObject(new MapObstacle(100, 100, 200, 50, ID.MapObstacles));
     }
 
     private void initHandlers() {
@@ -57,7 +65,7 @@ public class Game extends Canvas {
     }
 
     private void buildBasicScene(Graphics g) {
-        gameMap.draw(g);
+        gameMapHolder.draw(g);
         player.draw(g);
     }
 }
