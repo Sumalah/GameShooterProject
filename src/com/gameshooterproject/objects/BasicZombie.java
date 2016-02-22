@@ -39,8 +39,8 @@ public class BasicZombie extends Walker{
         int playerX = player.getX() - (player.getWidth()/2);
         int playerY = player.getY() - (player.getHeight()/2);
 
-        float xDistance = getX() - playerX;
-        float yDistance = getY() - playerY;
+        float xDistance = getX()-(getWidth()/2) - playerX;
+        float yDistance = getY() - (getHeight()/2) - playerY;
         double angleToTurn = Math.toDegrees(Math.atan2(yDistance, xDistance));
         direction = (270 - (int)angleToTurn);
         if(Math.abs(xDistance) > 5 && Math.abs(yDistance) > 5){
