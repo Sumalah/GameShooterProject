@@ -23,11 +23,9 @@ public class PlayerKeyHandler extends KeyAdapter{
         int key = e.getKeyCode();
 
         if(key == KeyEvent.VK_UP) {
-            player.speedUpForward();
             keyUp = true;
         }
         if(key == KeyEvent.VK_DOWN) {
-            player.speedUpBackward();
             keyDown = true;
         }
         if(key == KeyEvent.VK_LEFT) {
@@ -42,14 +40,13 @@ public class PlayerKeyHandler extends KeyAdapter{
             System.exit(1);
         }
 
-//        if(keyLeft){
-//            int actualPlayerDirection = player.getDirection();
-//            player.setDirection(actualPlayerDirection + 10);
-//        }
-//        if(keyRight){
-//            int actualPlayerDirection = player.getDirection();
-//            player.setDirection(actualPlayerDirection - 10);
-//        }
+        if(keyUp){
+            player.speedUpForward();
+        }
+
+        if(keyDown){
+            player.speedUpBackward();
+        }
     }
 
     public void keyReleased(KeyEvent e){

@@ -32,19 +32,6 @@ public abstract class Walker extends GameObject { //they had to be circles
     }
 
     public void stop(){
-//        Timer t = new Timer();
-//        t.schedule(new TimerTask() {
-//            int count = 0;
-//
-//            @Override
-//            public void run() {
-//                vel -= 1;
-//                count++;
-//                if (count >= 5) {
-//                    this.cancel();
-//                }
-//            }
-//        }, 300, 300);
         vel = 0;
     }
     protected void updateWalkerOffset() {
@@ -53,19 +40,19 @@ public abstract class Walker extends GameObject { //they had to be circles
     }
 
     public void speedUpForward(){
-        vel = 5;
+        vel = 6;
     }
 
     public void speedUpBackward(){
-        vel = -5;
+        vel = -4;
     }
 
     public void turnLeft(){
-        turning = 3;
+        turning = 5;
     }
 
     public void turnRight(){
-        turning = -3;
+        turning = -5;
     }
 
     public void stopTurning(){

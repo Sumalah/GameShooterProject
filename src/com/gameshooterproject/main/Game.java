@@ -6,6 +6,7 @@ import com.gameshooterproject.basic.WalkersHolder;
 import com.gameshooterproject.handlers.CollisionHandler;
 import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.handlers.PlayerKeyHandler;
+import com.gameshooterproject.objects.BasicZombie;
 import com.gameshooterproject.objects.GameMap;
 import com.gameshooterproject.objects.Player;
 import com.gameshooterproject.objects.mapelements.MapObstacle;
@@ -32,6 +33,7 @@ public class Game extends Canvas {
     private void initGameObjects() {
         player = new Player(0, 0, 50, 50, ID.Player);
         walkersHolder = new WalkersHolder(player);
+        walkersHolder.addNewWalkerObject(new BasicZombie(600, 600, 40, 40, ID.BasicZombie, player));
 
         gameMap = new GameMap(0, 0, 0, 0, ID.Map);
         gameMapHolder = new GameMapHolder(gameMap);
@@ -42,6 +44,7 @@ public class Game extends Canvas {
 
     private void makeGameLevel() {
         gameMapHolder.addNewMapObject(new MapObstacle(100, 100, 200, 50, ID.MapObstacles));
+        gameMapHolder.addNewMapObject(new MapObstacle(100, 300, 200, 50, ID.MapObstacles));
     }
 
     private void initHandlers() {
@@ -56,6 +59,7 @@ public class Game extends Canvas {
     public void update(){
         gameMapHolder.update();
         walkersHolder.update();
+
         collisionHandler.update();
         camera.update();
     }
@@ -66,6 +70,6 @@ public class Game extends Canvas {
 
     private void buildBasicScene(Graphics g) {
         gameMapHolder.draw(g);
-        player.draw(g);
+        walkersHolder.draw(g);
     }
 }

@@ -47,5 +47,4 @@ public class GameMapHolder {
                 tempObject.draw(g);
         }
     }
-
 }

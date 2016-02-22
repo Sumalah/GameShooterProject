@@ -5,6 +5,7 @@ import com.gameshooterproject.main.Window;
 import com.gameshooterproject.objects.core.Walker;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class Player extends Walker {
 
@@ -40,10 +41,12 @@ public class Player extends Walker {
     @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+        AffineTransform old = g2d.getTransform();
         g2d.setColor(Color.WHITE);
         g2d.rotate(Math.toRadians(-1 * direction), x + (width/2), y + (height / 2));
         g2d.fillOval(x, y, width, height);
         g2d.fillRect(x+(width/2)-3, y+height - 5, 5, 20);
+        g2d.setTransform(old);  // after that nothing will be rotated
     }
 //================GETTERS - SETTERS================//
 
