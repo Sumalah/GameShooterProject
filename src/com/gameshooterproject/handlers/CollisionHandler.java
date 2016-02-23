@@ -17,7 +17,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
 public class CollisionHandler {
-    private Player player;
     private GameMap gameMap;
     private GameMapHolder gameMapHolder;
     private WalkersHolder walkersHolder;
@@ -27,7 +26,6 @@ public class CollisionHandler {
         this.gameMapHolder = gameMapHolder;
         this.walkersHolder = walkersHolder;
         this.bulletsHolder = bulletsHolder;
-        this.player = walkersHolder.getPlayer();
         this.gameMap = gameMapHolder.getGameMap();
     }
 
