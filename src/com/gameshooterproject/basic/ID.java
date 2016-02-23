@@ -4,5 +4,6 @@ public enum ID {
     Map(),
     MapObstacles(),
     BasicZombie,
-    Player()
+    Player(),
+    Hud, Bullet, Weapon()
 }

@@ -3,6 +3,7 @@ package com.gameshooterproject.objects;
 import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.main.Window;
 import com.gameshooterproject.objects.core.Walker;
+import com.gameshooterproject.objects.core.Weapon;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -11,9 +12,10 @@ public class Player extends Walker {
 
     private boolean playerCenterVertically;
     private boolean playerCenterHorizontally;
+    public Weapon weapon;
 
-    public Player(int x, int y, int width, int height, ID id) {
-        super(x, y, width, height, id);
+    public Player(int x, int y, int width, int height, ID id, int health) {
+        super(x, y, width, height, id, health);
         centerPlayer();
     }
 
@@ -32,14 +34,20 @@ public class Player extends Walker {
     public void update() {
         rotatePlayer();
         updateWalkerOffset();
+        weapon.updateBullets();
     }
 
     private void rotatePlayer() {
         setDirection(getDirection() + turning);
     }
 
+    public void addWeapon(Weapon weapon){
+        this.weapon = weapon;
+    }
+
     @Override
     public void draw(Graphics g) {
+        weapon.drawBullets(g);
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
         g2d.setColor(Color.WHITE);

@@ -5,6 +5,7 @@ import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.basic.WalkersHolder;
 import com.gameshooterproject.objects.GameMap;
 import com.gameshooterproject.objects.Player;
+import com.gameshooterproject.objects.core.Bullet;
 import com.gameshooterproject.objects.core.GameObject;
 import com.gameshooterproject.objects.core.Walker;
 
@@ -29,6 +30,26 @@ public class CollisionHandler {
 
     public void update() {
         handleCollisions();
+        handleBulletHits();
+    }
+
+    private void handleBulletHits() {
+        LinkedList<Walker> walkerLinkedList = walkersHolder.getWalkerObjectsList();
+        LinkedList<Bullet> bullets = player.weapon.bullets;
+
+        for(int i = 0; i < walkerLinkedList.size(); i++){
+            Walker tempWalker = walkerLinkedList.get(i);
+
+            for(int j = 0; j < bullets.size(); j++){
+                Bullet tempBullet = bullets.get(j);
+
+                if(isCollision(tempBullet, tempWalker)){
+                    if(tempWalker.getId() == ID.BasicZombie)
+                        tempWalker.takeDamage(tempBullet.damage);
+                }
+
+            }
+        }
     }
 
     private void handleCollisions() {

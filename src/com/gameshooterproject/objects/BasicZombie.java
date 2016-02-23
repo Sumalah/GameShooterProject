@@ -9,8 +9,8 @@ import java.awt.geom.AffineTransform;
 public class BasicZombie extends Walker{
     Player player;
 
-    public BasicZombie(int x, int y, int width, int height, ID id, Player player) {
-        super(x, y, width, height, id);
+    public BasicZombie(int x, int y, int width, int height, ID id, Player player, int health) {
+        super(x, y, width, height, id, health);
 
         this.player = player;
         setVel(3);
@@ -18,10 +18,13 @@ public class BasicZombie extends Walker{
 
     @Override
     public void update() {
-        followPlayer();
-        moveByYOffset(getOffsetY());
-        moveByXOffset(getOffsetX());
-        updateWalkerOffset();
+        if(isAlive()){
+            followPlayer();
+            moveByYOffset(getOffsetY());
+            moveByXOffset(getOffsetX());
+            updateWalkerOffset();
+        }else{
+        }
     }
 
     @Override
@@ -49,5 +52,12 @@ public class BasicZombie extends Walker{
             vel = 0;
         }
 
+    }
+
+    private boolean isAlive(){
+        if(health > 0){
+            return true;
+        }
+        return false;
     }
 }

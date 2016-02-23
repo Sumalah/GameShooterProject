@@ -7,9 +7,11 @@ public abstract class Walker extends GameObject { //they had to be circles
     protected int direction;
     protected int offsetX, offsetY;
     protected int turning;
+    protected int health;
 
-    public Walker(int x, int y, int width, int height, ID id) {
+    public Walker(int x, int y, int width, int height, ID id, int health) {
         super(x, y, width, height, id);
+        this.health = health;
         vel = 0;
         direction = 180;
         turning = 0;
@@ -37,6 +39,10 @@ public abstract class Walker extends GameObject { //they had to be circles
     protected void updateWalkerOffset() {
         offsetX = (int)(vel * Math.sin(Math.toRadians(direction)));
         offsetY = (int)(vel * Math.cos(Math.toRadians(direction)));
+    }
+
+    public void takeDamage(int damage){
+        health -= damage;
     }
 
     public void speedUpForward(){
@@ -81,5 +87,13 @@ public abstract class Walker extends GameObject { //they had to be circles
 
     public void setOffsetY(int offsetY) {
         this.offsetY = offsetY;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

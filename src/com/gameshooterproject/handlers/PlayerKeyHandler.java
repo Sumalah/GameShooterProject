@@ -39,6 +39,9 @@ public class PlayerKeyHandler extends KeyAdapter{
         if(key == KeyEvent.VK_ESCAPE){
             System.exit(1);
         }
+        if(key == KeyEvent.VK_SPACE){
+            player.weapon.shootBullet(player.getDirection(), player.getX() + player.getWidth() / 2, player.getY() + player.getHeight()/2);
+        }
 
         if(keyUp){
             player.speedUpForward();

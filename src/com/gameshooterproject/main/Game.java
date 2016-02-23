@@ -1,14 +1,12 @@
 package com.gameshooterproject.main;
 
-import com.gameshooterproject.basic.Camera;
-import com.gameshooterproject.basic.GameMapHolder;
-import com.gameshooterproject.basic.WalkersHolder;
+import com.gameshooterproject.basic.*;
 import com.gameshooterproject.handlers.CollisionHandler;
-import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.handlers.PlayerKeyHandler;
 import com.gameshooterproject.objects.BasicZombie;
 import com.gameshooterproject.objects.GameMap;
 import com.gameshooterproject.objects.Player;
+import com.gameshooterproject.objects.core.Weapon;
 import com.gameshooterproject.objects.mapelements.MapObstacle;
 
 import java.awt.*;
@@ -21,6 +19,8 @@ public class Game extends Canvas {
     GameMap gameMap;
     Player player;
     Camera camera;
+    Weapon weapon;
+    HUD hud;
 
     public Game(){
         mainLoop = new MainLoop(this);
@@ -31,13 +31,17 @@ public class Game extends Canvas {
     }
 
     private void initGameObjects() {
-        player = new Player(0, 0, 50, 50, ID.Player);
+        player = new Player(0, 0, 50, 50, ID.Player, 200);
+        weapon = new Weapon("Pistol", 30, ID.Weapon, 30);
+        player.addWeapon(weapon);
         walkersHolder = new WalkersHolder(player);
-        walkersHolder.addNewWalkerObject(new BasicZombie(600, 600, 40, 40, ID.BasicZombie, player));
+        walkersHolder.addNewWalkerObject(new BasicZombie(600, 600, 40, 40, ID.BasicZombie, player, 50));
 
         gameMap = new GameMap(0, 0, 0, 0, ID.Map);
         gameMapHolder = new GameMapHolder(gameMap);
         makeGameLevel();
+
+        hud = new HUD(50, 50, 100, 25, ID.Hud, player);
 
         camera = new Camera(gameMapHolder, walkersHolder);
     }
@@ -61,6 +65,7 @@ public class Game extends Canvas {
         walkersHolder.update();
 
         collisionHandler.update();
+        hud.update();
         camera.update();
     }
 
@@ -71,5 +76,6 @@ public class Game extends Canvas {
     private void buildBasicScene(Graphics g) {
         gameMapHolder.draw(g);
         walkersHolder.draw(g);
+        hud.draw(g);
     }
 }
