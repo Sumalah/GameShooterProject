@@ -25,11 +25,11 @@ public class Camera {
 
     private void getAllObjects() {
         player = walkersHolder.getPlayer();
-        LinkedList<Walker> walkersList = walkersHolder.getWalkerObjectsList();
-        LinkedList<GameObject> mapObjectsList = gameMapHolder.getMapObjectsList();
+        LinkedList<GameObject> walkersList = walkersHolder.getGameObjectLinkedList();
+        LinkedList<GameObject> mapObjectsList = gameMapHolder.getGameObjectLinkedList();
 
         for(int i = 0; i < walkersList.size(); i++){
-            Walker tempWalker = walkersList.get(i);
+            Walker tempWalker = (Walker)walkersList.get(i);
             if(tempWalker.getId() != ID.Player){
                 allObjectsList.add(tempWalker);
             }

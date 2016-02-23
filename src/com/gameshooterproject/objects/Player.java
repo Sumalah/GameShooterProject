@@ -12,7 +12,7 @@ public class Player extends Walker {
 
     private boolean playerCenterVertically;
     private boolean playerCenterHorizontally;
-    public Weapon weapon;
+    private Weapon weapon;
 
     public Player(int x, int y, int width, int height, ID id, int health) {
         super(x, y, width, height, id, health);
@@ -34,7 +34,6 @@ public class Player extends Walker {
     public void update() {
         rotatePlayer();
         updateWalkerOffset();
-        weapon.updateBullets();
     }
 
     private void rotatePlayer() {
@@ -47,7 +46,6 @@ public class Player extends Walker {
 
     @Override
     public void draw(Graphics g) {
-        weapon.drawBullets(g);
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
         g2d.setColor(Color.WHITE);
@@ -72,5 +70,13 @@ public class Player extends Walker {
 
     public boolean isPlayerCenterHorizontally(){
         return playerCenterHorizontally;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 }

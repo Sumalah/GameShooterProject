@@ -1,5 +1,6 @@
 package com.gameshooterproject.handlers;
 
+import com.gameshooterproject.basic.BulletsHolder;
 import com.gameshooterproject.basic.GameMapHolder;
 import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.basic.WalkersHolder;
@@ -20,10 +21,12 @@ public class CollisionHandler {
     private GameMap gameMap;
     private GameMapHolder gameMapHolder;
     private WalkersHolder walkersHolder;
+    private BulletsHolder bulletsHolder;
 
-    public CollisionHandler(GameMapHolder gameMapHolder, WalkersHolder walkersHolder) {
+    public CollisionHandler(GameMapHolder gameMapHolder, WalkersHolder walkersHolder, BulletsHolder bulletsHolder) {
         this.gameMapHolder = gameMapHolder;
         this.walkersHolder = walkersHolder;
+        this.bulletsHolder = bulletsHolder;
         this.player = walkersHolder.getPlayer();
         this.gameMap = gameMapHolder.getGameMap();
     }
@@ -34,14 +37,14 @@ public class CollisionHandler {
     }
 
     private void handleBulletHits() {
-        LinkedList<Walker> walkerLinkedList = walkersHolder.getWalkerObjectsList();
-        LinkedList<Bullet> bullets = player.weapon.bullets;
+        LinkedList<GameObject> walkerLinkedList = walkersHolder.getGameObjectLinkedList();
+        LinkedList<GameObject> bullets = bulletsHolder.getGameObjectLinkedList();
 
         for(int i = 0; i < walkerLinkedList.size(); i++){
-            Walker tempWalker = walkerLinkedList.get(i);
+            Walker tempWalker = (Walker)walkerLinkedList.get(i);
 
             for(int j = 0; j < bullets.size(); j++){
-                Bullet tempBullet = bullets.get(j);
+                Bullet tempBullet = (Bullet)bullets.get(j);
 
                 if(isCollision(tempBullet, tempWalker)){
                     if(tempWalker.getId() == ID.BasicZombie) {
@@ -60,11 +63,11 @@ public class CollisionHandler {
     }
 
     private void keepWalkersAwayFromObstacles() { //BTW what if obstacle will have direction var?
-        LinkedList<Walker> walkerLinkedList = walkersHolder.getWalkerObjectsList();
-        LinkedList<GameObject> mapObjectsList = gameMapHolder.getMapObjectsList();
+        LinkedList<GameObject> walkerLinkedList = walkersHolder.getGameObjectLinkedList();
+        LinkedList<GameObject> mapObjectsList = gameMapHolder.getGameObjectLinkedList();
 
         for(int i = 0; i < walkerLinkedList.size(); i++){
-            Walker tempWalker = walkerLinkedList.get(i);
+            Walker tempWalker = (Walker)walkerLinkedList.get(i);
 
             for(int j = 0; j < mapObjectsList.size(); j++){
                 GameObject tempMapObject = mapObjectsList.get(j);
@@ -118,10 +121,10 @@ public class CollisionHandler {
     }
 
     private void keepWalkersInGameMap() {
-        LinkedList<Walker> walkerLinkedList = walkersHolder.getWalkerObjectsList();
+        LinkedList<GameObject> walkerLinkedList = walkersHolder.getGameObjectLinkedList();
 
         for(int i = 0; i < walkerLinkedList.size(); i++){
-            Walker tempWalker = walkerLinkedList.get(i);
+            Walker tempWalker = (Walker)walkerLinkedList.get(i);
 
             if(isWalkerCrossingTopLine(tempWalker)){
                 tempWalker.setOffsetY(1);

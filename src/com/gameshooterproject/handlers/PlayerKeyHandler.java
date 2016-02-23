@@ -1,17 +1,22 @@
 package com.gameshooterproject.handlers;
 
+import com.gameshooterproject.basic.BulletsHolder;
 import com.gameshooterproject.objects.Player;
+import com.gameshooterproject.objects.core.Bullet;
+import com.gameshooterproject.objects.core.Weapon;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class PlayerKeyHandler extends KeyAdapter{
     Player player;
+    BulletsHolder bulletsHolder;
 
     boolean keyUp, keyDown, keyLeft, keyRight;
 
-    public PlayerKeyHandler(Player player) {
+    public PlayerKeyHandler(Player player, BulletsHolder bulletsHolder) {
         this.player = player;
+        this. bulletsHolder = bulletsHolder;
 
         keyUp = false;
         keyDown = false;
@@ -40,7 +45,9 @@ public class PlayerKeyHandler extends KeyAdapter{
             System.exit(1);
         }
         if(key == KeyEvent.VK_SPACE){
-            player.weapon.shootBullet(player.getDirection(), player.getX() + player.getWidth() / 2, player.getY() + player.getHeight()/2);
+            Weapon playerWeapon = player.getWeapon();
+            Bullet bullet = playerWeapon.shootBullet(player.getDirection(), player.getX() + player.getWidth() / 2, player.getY() + player.getHeight()/2);
+            bulletsHolder.addNewObject(bullet);
         }
 
         if(keyUp){
