@@ -44,8 +44,10 @@ public class CollisionHandler {
                 Bullet tempBullet = bullets.get(j);
 
                 if(isCollision(tempBullet, tempWalker)){
-                    if(tempWalker.getId() == ID.BasicZombie)
+                    if(tempWalker.getId() == ID.BasicZombie) {
                         tempWalker.takeDamage(tempBullet.damage);
+                        bullets.remove(tempBullet);
+                    }
                 }
 
             }
