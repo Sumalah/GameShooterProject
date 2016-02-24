@@ -18,13 +18,10 @@ public class BasicZombie extends Walker{
 
     @Override
     public void update() {
-        if(isAlive()){
-            followPlayer();
-            moveByYOffset(getOffsetY());
-            moveByXOffset(getOffsetX());
-            updateWalkerOffset();
-        }else{
-        }
+        followPlayer();
+        moveByYOffset(getOffsetY());
+        moveByXOffset(getOffsetX());
+        updateWalkerOffset();
     }
 
     @Override
@@ -54,7 +51,7 @@ public class BasicZombie extends Walker{
 
     }
 
-    private boolean isAlive(){
+    public boolean isAlive(){
         if(health > 0){
             return true;
         }

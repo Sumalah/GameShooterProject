@@ -3,6 +3,7 @@ package com.gameshooterproject.main;
 import com.gameshooterproject.basic.*;
 import com.gameshooterproject.handlers.CollisionHandler;
 import com.gameshooterproject.handlers.PlayerKeyHandler;
+import com.gameshooterproject.handlers.Spawner;
 import com.gameshooterproject.objects.BasicZombie;
 import com.gameshooterproject.objects.GameMap;
 import com.gameshooterproject.objects.Player;
@@ -22,6 +23,7 @@ public class Game extends Canvas {
     Camera camera;
     Weapon weapon;
     HUD hud;
+    Spawner spawner;
 
     public Game(){
         mainLoop = new MainLoop(this);
@@ -33,7 +35,6 @@ public class Game extends Canvas {
 
     private void initGameObjects() {
         initPlayer();
-        initZombies();
         initMap();
         makeGameLevel();
 
@@ -45,14 +46,10 @@ public class Game extends Canvas {
 
     private void initPlayer() {
         player = new Player(0, 0, 50, 50, ID.Player, 200);
-        weapon = new Weapon("Pistol",50, ID.Weapon, 30);
+        weapon = new Weapon("Pistol", 5, ID.Weapon, 30);
         player.addWeapon(weapon);
 
         walkersHolder = new WalkersHolder(player);
-    }
-
-    private void initZombies() {
-        walkersHolder.addNewObject(new BasicZombie(600, 600, 40, 40, ID.BasicZombie, player, 50));
     }
 
     private void initMap() {
@@ -66,6 +63,7 @@ public class Game extends Canvas {
     }
 
     private void initHandlers() {
+        spawner = new Spawner(walkersHolder);
         mainLoop.addKeyListener(new PlayerKeyHandler(player, bulletsHolder));
         collisionHandler = new CollisionHandler(gameMapHolder, walkersHolder, bulletsHolder);
     }
@@ -75,6 +73,8 @@ public class Game extends Canvas {
     }
 
     public void update(){
+        spawner.update();
+
         gameMapHolder.update();
         walkersHolder.update();
         bulletsHolder.update();

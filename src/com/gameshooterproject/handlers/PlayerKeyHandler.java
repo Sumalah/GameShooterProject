@@ -12,7 +12,7 @@ public class PlayerKeyHandler extends KeyAdapter{
     Player player;
     BulletsHolder bulletsHolder;
 
-    boolean keyUp, keyDown, keyLeft, keyRight;
+    boolean keyUp, keyDown, keyLeft, keyRight, keySpacebar;
 
     public PlayerKeyHandler(Player player, BulletsHolder bulletsHolder) {
         this.player = player;
@@ -22,6 +22,7 @@ public class PlayerKeyHandler extends KeyAdapter{
         keyDown = false;
         keyLeft = false;
         keyRight = false;
+        keySpacebar = false;
     }
 
     public void keyPressed(KeyEvent e){
@@ -45,11 +46,8 @@ public class PlayerKeyHandler extends KeyAdapter{
             System.exit(1);
         }
         if(key == KeyEvent.VK_SPACE){
-            Weapon playerWeapon = player.getWeapon();
-            if(playerWeapon.readyToShot()){
-                Bullet bullet = playerWeapon.shootBullet(player.getDirection(), player.getX() + player.getWidth() / 2, player.getY() + player.getHeight()/2);
-                bulletsHolder.addNewObject(bullet);
-            }
+            keySpacebar = true;
+            shot();
         }
 
         if(keyUp){
@@ -59,6 +57,7 @@ public class PlayerKeyHandler extends KeyAdapter{
         if(keyDown){
             player.speedUpBackward();
         }
+
     }
 
     public void keyReleased(KeyEvent e){
@@ -78,10 +77,20 @@ public class PlayerKeyHandler extends KeyAdapter{
             player.stopTurning();
             keyRight = false;
         }
+        if(key == KeyEvent.VK_SPACE){
+            keySpacebar = false;
+        }
 
         if(!keyUp && !keyDown){
             player.stop();
         }
+    }
 
+    private void shot(){
+        Weapon playerWeapon = player.getWeapon();
+        if (playerWeapon.readyToShot()) {
+            Bullet bullet = playerWeapon.shootBullet(player.getDirection(), player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2);
+            bulletsHolder.addNewObject(bullet);
+        }
     }
 }

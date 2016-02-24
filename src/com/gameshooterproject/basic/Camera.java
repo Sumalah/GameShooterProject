@@ -16,7 +16,6 @@ public class Camera {
     private Player player;
 
     public Camera(GameMapHolder gameMapHolder, WalkersHolder walkersHolder) {
-        allObjectsList = new LinkedList<>();
         this.gameMapHolder = gameMapHolder;
         this.walkersHolder = walkersHolder;
 
@@ -24,6 +23,7 @@ public class Camera {
     }
 
     private void getAllObjects() {
+        allObjectsList = new LinkedList<>();
         player = walkersHolder.getPlayer();
         LinkedList<GameObject> walkersList = walkersHolder.getGameObjectLinkedList();
         LinkedList<GameObject> mapObjectsList = gameMapHolder.getGameObjectLinkedList();
@@ -42,6 +42,7 @@ public class Camera {
     }
 
     public void update(){
+        getAllObjects();
         updatePlayerCameraLock();
         moveObjectsOrPlayer();
     }
