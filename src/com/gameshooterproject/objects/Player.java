@@ -2,6 +2,7 @@ package com.gameshooterproject.objects;
 
 import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.main.Window;
+import com.gameshooterproject.objects.core.Bullet;
 import com.gameshooterproject.objects.core.Walker;
 import com.gameshooterproject.objects.core.Weapon;
 

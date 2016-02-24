@@ -46,8 +46,10 @@ public class PlayerKeyHandler extends KeyAdapter{
         }
         if(key == KeyEvent.VK_SPACE){
             Weapon playerWeapon = player.getWeapon();
-            Bullet bullet = playerWeapon.shootBullet(player.getDirection(), player.getX() + player.getWidth() / 2, player.getY() + player.getHeight()/2);
-            bulletsHolder.addNewObject(bullet);
+            if(playerWeapon.readyToShot()){
+                Bullet bullet = playerWeapon.shootBullet(player.getDirection(), player.getX() + player.getWidth() / 2, player.getY() + player.getHeight()/2);
+                bulletsHolder.addNewObject(bullet);
+            }
         }
 
         if(keyUp){
