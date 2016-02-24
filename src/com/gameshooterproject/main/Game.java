@@ -34,11 +34,10 @@ public class Game extends Canvas {
     }
 
     private void initGameObjects() {
+        bulletsHolder = new BulletsHolder();
         initPlayer();
         initMap();
         makeGameLevel();
-
-        bulletsHolder = new BulletsHolder();
 
         hud = new HUD(50, 50, 100, 25, ID.Hud, player);
         camera = new Camera(gameMapHolder, walkersHolder);
@@ -46,7 +45,7 @@ public class Game extends Canvas {
 
     private void initPlayer() {
         player = new Player(0, 0, 50, 50, ID.Player, 200);
-        weapon = new Weapon("Pistol", 5, ID.Weapon, 30);
+        weapon = new Weapon("Pistol", 5, ID.Weapon, 30, player, bulletsHolder);
         player.addWeapon(weapon);
 
         walkersHolder = new WalkersHolder(player);
@@ -73,6 +72,7 @@ public class Game extends Canvas {
     }
 
     public void update(){
+        weapon.update();
         spawner.update();
 
         gameMapHolder.update();

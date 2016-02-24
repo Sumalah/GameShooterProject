@@ -1,6 +1,8 @@
 package com.gameshooterproject.objects.core;
 
+import com.gameshooterproject.basic.BulletsHolder;
 import com.gameshooterproject.basic.ID;
+import com.gameshooterproject.objects.Player;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -11,17 +13,33 @@ public class Weapon{
     private int maxCooldown;
     private int actualCooldown;
     private int damage;
+    private Player player;
+    private BulletsHolder bulletsHolder;
     Timer timer;
     CountCooldown countCooldown;
+    private boolean triggerPressed;
 
-    public Weapon(String name, int maxCooldown, ID id, int damage) {
+    public Weapon(String name, int maxCooldown, ID id, int damage, Player player, BulletsHolder bulletsHolder) {
         this.name = name;
         this.maxCooldown = maxCooldown;
         this.id = id;
         this.damage = damage;
+        this.player = player;
+        this.bulletsHolder = bulletsHolder;
+
         this.timer = new Timer();
+        this.triggerPressed = false;
 
         actualCooldown = 0;
+    }
+
+    public void update(){
+        if(isTriggerPressed()){
+            if (readyToShot()) {
+                Bullet bullet = shootBullet(player.getDirection(), player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2);
+                bulletsHolder.addNewObject(bullet);
+            }
+        }
     }
 
     private void cooldownCounter(){
@@ -46,6 +64,14 @@ public class Weapon{
             return true;
         }
         return false;
+    }
+
+    public boolean isTriggerPressed() {
+        return triggerPressed;
+    }
+
+    public void setTriggerPressed(boolean triggerPressed) {
+        this.triggerPressed = triggerPressed;
     }
 }
 
