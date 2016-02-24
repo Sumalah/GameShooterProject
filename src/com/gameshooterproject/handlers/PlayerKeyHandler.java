@@ -28,17 +28,17 @@ public class PlayerKeyHandler extends KeyAdapter{
     public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
 
-        if(key == KeyEvent.VK_UP) {
+        if(key == KeyEvent.VK_W) {
             keyUp = true;
         }
-        if(key == KeyEvent.VK_DOWN) {
+        if(key == KeyEvent.VK_S) {
             keyDown = true;
         }
-        if(key == KeyEvent.VK_LEFT) {
+        if(key == KeyEvent.VK_A) {
             player.turnLeft();
             keyLeft = true;
         }
-        if(key == KeyEvent.VK_RIGHT) {
+        if(key == KeyEvent.VK_D) {
             player.turnRight();
             keyRight = true;
         }
@@ -63,17 +63,17 @@ public class PlayerKeyHandler extends KeyAdapter{
     public void keyReleased(KeyEvent e){
         int key = e.getKeyCode();
 
-        if(key == KeyEvent.VK_UP) {
+        if(key == KeyEvent.VK_W) {
             keyUp = false;
         }
-        if(key == KeyEvent.VK_DOWN) {
+        if(key == KeyEvent.VK_S) {
             keyDown = false;
         }
-        if(key == KeyEvent.VK_LEFT) {
+        if(key == KeyEvent.VK_A) {
             player.stopTurning();
             keyLeft = false;
         }
-        if(key == KeyEvent.VK_RIGHT) {
+        if(key == KeyEvent.VK_D) {
             player.stopTurning();
             keyRight = false;
         }

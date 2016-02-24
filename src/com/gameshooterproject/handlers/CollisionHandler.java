@@ -50,7 +50,6 @@ public class CollisionHandler {
                         bullets.remove(tempBullet);
                     }
                 }
-
             }
         }
     }

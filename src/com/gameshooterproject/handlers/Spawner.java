@@ -2,6 +2,7 @@ package com.gameshooterproject.handlers;
 
 import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.basic.WalkersHolder;
+import com.gameshooterproject.main.Window;
 import com.gameshooterproject.objects.BasicZombie;
 import com.gameshooterproject.objects.Player;
 import com.gameshooterproject.objects.core.Walker;
@@ -20,7 +21,7 @@ public class Spawner {
 
     public void update(){
         removeDeadZombies();
-        if(countWalkers() < 1){
+        if(countWalkers() < 7){
             spawnNewRandomBasicZombie();
         }
     }
@@ -41,10 +42,10 @@ public class Spawner {
 
     private void spawnNewRandomBasicZombie() {
         Random random = new Random();
-        int x = random.nextInt(100);
-        int y = random.nextInt(100);
+        int x = random.nextInt(Window.WIDTH);
+        int y = random.nextInt(Window.HEIGHT);
 
-        walkersHolder.addNewObject(new BasicZombie(x, y, 40, 40, ID.BasicZombie, player, 31));
+        walkersHolder.addNewObject(new BasicZombie(x, y, 70, 70, ID.BasicZombie, player, 31));
     }
 
     private int countWalkers(){
