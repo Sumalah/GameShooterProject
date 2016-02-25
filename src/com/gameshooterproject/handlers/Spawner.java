@@ -21,7 +21,7 @@ public class Spawner {
 
     public void update(){
         removeDeadZombies();
-        if(countWalkers() < 7){
+        if(countWalkers() < 0){
             spawnNewRandomBasicZombie();
         }
     }

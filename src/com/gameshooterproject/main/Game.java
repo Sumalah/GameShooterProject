@@ -59,6 +59,7 @@ public class Game extends Canvas {
     private void makeGameLevel() {
         gameMapHolder.addNewObject(new MapObstacle(100, 100, 200, 50, ID.MapObstacles));
         gameMapHolder.addNewObject(new MapObstacle(100, 300, 200, 50, ID.MapObstacles));
+        gameMapHolder.addNewObject(new MapObstacle(600, 600, 100, 500, ID.MapObstacles));
     }
 
     private void initHandlers() {

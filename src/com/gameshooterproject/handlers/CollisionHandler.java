@@ -32,6 +32,20 @@ public class CollisionHandler {
     public void update() {
         handleCollisions();
         handleBulletHits();
+        handleBulletsOurOfSight();
+    }
+
+    private void handleBulletsOurOfSight() {
+        LinkedList<GameObject> bullets = bulletsHolder.getGameObjectLinkedList();
+
+        for(int i = 0; i < bullets.size(); i++){
+            Bullet bullet = (Bullet) bullets.get(i);
+
+            if((bullet.getX() < gameMap.getX() || bullet.getX() > gameMap.getX() + gameMap.getWidth())
+                    || (bullet.getY() < gameMap.getY() || bullet.getY() > gameMap.getY() + gameMap.getHeight())){
+                bulletsHolder.removeObject(bullet);
+            }
+        }
     }
 
     private void handleBulletHits() {

@@ -9,7 +9,7 @@ public class Bullet extends GameObject{
     private int direction;
     private int offsetX;
     private int offsetY;
-    private int vel = 15;
+    private int vel = 30;
 
     public Bullet(int x, int y, int width, int height, ID id, int damage, int direction) {
         super(x, y, width, height, id);
