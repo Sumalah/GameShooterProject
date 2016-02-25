@@ -9,20 +9,18 @@ import java.util.TimerTask;
 
 public class Weapon{
     private String name;
-    private ID id;
     private int maxCooldown;
     private int actualCooldown;
     private int damage;
     private Player player;
     private BulletsHolder bulletsHolder;
-    Timer timer;
-    CountCooldown countCooldown;
+    private Timer timer;
+    private CountCooldown countCooldown;
     private boolean triggerPressed;
 
-    public Weapon(String name, int maxCooldown, ID id, int damage, Player player, BulletsHolder bulletsHolder) {
+    public Weapon(String name, int maxCooldown, int damage, Player player, BulletsHolder bulletsHolder) {
         this.name = name;
         this.maxCooldown = maxCooldown;
-        this.id = id;
         this.damage = damage;
         this.player = player;
         this.bulletsHolder = bulletsHolder;

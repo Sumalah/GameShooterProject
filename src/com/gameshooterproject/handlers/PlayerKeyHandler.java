@@ -2,7 +2,6 @@ package com.gameshooterproject.handlers;
 
 import com.gameshooterproject.basic.BulletsHolder;
 import com.gameshooterproject.objects.Player;
-import com.gameshooterproject.objects.core.Bullet;
 import com.gameshooterproject.objects.core.Weapon;
 
 import java.awt.event.KeyAdapter;

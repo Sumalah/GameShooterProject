@@ -45,7 +45,7 @@ public class Game extends Canvas {
 
     private void initPlayer() {
         player = new Player(0, 0, 50, 50, ID.Player, 200);
-        weapon = new Weapon("Pistol", 1, ID.Weapon, 30, player, bulletsHolder);
+        weapon = new Weapon("Pistol", 1, 30, player, bulletsHolder);
         player.addWeapon(weapon);
 
         walkersHolder = new WalkersHolder(player);
