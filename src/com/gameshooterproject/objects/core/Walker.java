@@ -33,6 +33,13 @@ public abstract class Walker extends GameObject { //they had to be circles
         }
     }
 
+    public boolean isAlive(){
+        if(health > 0){
+            return true;
+        }
+        return false;
+    }
+
     public void stop(){
         vel = 0;
     }

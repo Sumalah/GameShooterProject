@@ -1,8 +1,7 @@
-package com.gameshooterproject.objects.core;
+package com.gameshooterproject.objects;
 
 import com.gameshooterproject.basic.BulletsHolder;
 import com.gameshooterproject.basic.ID;
-import com.gameshooterproject.objects.Player;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -52,7 +51,7 @@ public class Weapon{
 
         cooldownCounter();
 
-        return new Bullet(x, y, 5, 5, ID.Bullet, this.damage, direction);
+        return new Bullet(x, y, 5, 10, ID.Bullet, this.damage, direction);
     }
 
     public boolean readyToShot() {

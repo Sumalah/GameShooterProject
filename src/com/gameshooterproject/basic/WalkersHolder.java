@@ -1,6 +1,8 @@
 package com.gameshooterproject.basic;
 
+import com.gameshooterproject.objects.BasicZombie;
 import com.gameshooterproject.objects.Player;
+import com.gameshooterproject.objects.core.Walker;
 
 public class WalkersHolder extends BasicHolder{
     Player player;
@@ -13,5 +15,23 @@ public class WalkersHolder extends BasicHolder{
 
     public Player getPlayer(){
         return player;
+    }
+
+    private void removeZombieIfDead(Walker zombie) {
+                if(!zombie.isAlive()){
+                    gameObjectLinkedList.remove(zombie);
+                }
+    }
+
+    @Override
+    public void update() {
+        for(int i = 0; i < gameObjectLinkedList.size(); i++){
+            Walker walker = (Walker) gameObjectLinkedList.get(i);
+            walker.update();
+
+            if (walker.getId() == ID.BasicZombie) {
+                removeZombieIfDead(walker);
+            }
+        }
     }
 }

@@ -50,11 +50,4 @@ public class BasicZombie extends Walker{
         }
 
     }
-
-    public boolean isAlive(){
-        if(health > 0){
-            return true;
-        }
-        return false;
-    }
 }

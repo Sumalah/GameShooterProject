@@ -4,11 +4,9 @@ import com.gameshooterproject.basic.*;
 import com.gameshooterproject.handlers.CollisionHandler;
 import com.gameshooterproject.handlers.PlayerKeyHandler;
 import com.gameshooterproject.handlers.Spawner;
-import com.gameshooterproject.objects.BasicZombie;
 import com.gameshooterproject.objects.GameMap;
 import com.gameshooterproject.objects.Player;
-import com.gameshooterproject.objects.core.Weapon;
-import com.gameshooterproject.objects.mapelements.MapObstacle;
+import com.gameshooterproject.objects.Weapon;
 
 import java.awt.*;
 
@@ -18,6 +16,7 @@ public class Game extends Canvas {
     GameMapHolder gameMapHolder;
     WalkersHolder walkersHolder;
     BulletsHolder bulletsHolder;
+    CrateHolder crateHolder;
     GameMap gameMap;
     Player player;
     Camera camera;
@@ -35,17 +34,17 @@ public class Game extends Canvas {
 
     private void initGameObjects() {
         bulletsHolder = new BulletsHolder();
+        crateHolder = new CrateHolder();
         initPlayer();
         initMap();
-        makeGameLevel();
 
         hud = new HUD(50, 50, 100, 25, ID.Hud, player);
-        camera = new Camera(gameMapHolder, walkersHolder);
+        camera = new Camera(gameMapHolder, walkersHolder, bulletsHolder, crateHolder);
     }
 
     private void initPlayer() {
         player = new Player(0, 0, 50, 50, ID.Player, 200);
-        weapon = new Weapon("Pistol", 1, 30, player, bulletsHolder);
+        weapon = new Weapon("Pistol", 2, 30, player, bulletsHolder);
         player.addWeapon(weapon);
 
         walkersHolder = new WalkersHolder(player);
@@ -56,16 +55,10 @@ public class Game extends Canvas {
         gameMapHolder = new GameMapHolder(gameMap);
     }
 
-    private void makeGameLevel() {
-        gameMapHolder.addNewObject(new MapObstacle(100, 100, 200, 50, ID.MapObstacles));
-        gameMapHolder.addNewObject(new MapObstacle(100, 300, 200, 50, ID.MapObstacles));
-        gameMapHolder.addNewObject(new MapObstacle(600, 600, 100, 500, ID.MapObstacles));
-    }
-
     private void initHandlers() {
-        spawner = new Spawner(walkersHolder);
+        spawner = new Spawner(walkersHolder, crateHolder);
         mainLoop.addKeyListener(new PlayerKeyHandler(player, bulletsHolder));
-        collisionHandler = new CollisionHandler(gameMapHolder, walkersHolder, bulletsHolder);
+        collisionHandler = new CollisionHandler(gameMapHolder, walkersHolder, bulletsHolder, crateHolder);
     }
 
     public static void main(String[] args) {
@@ -79,6 +72,7 @@ public class Game extends Canvas {
         gameMapHolder.update();
         walkersHolder.update();
         bulletsHolder.update();
+        crateHolder.update();
 
         collisionHandler.update();
         hud.update();
@@ -89,6 +83,7 @@ public class Game extends Canvas {
         gameMapHolder.draw(g);
         walkersHolder.draw(g);
         bulletsHolder.draw(g);
+        crateHolder.draw(g);
         hud.draw(g);
     }
 }

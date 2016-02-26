@@ -7,17 +7,13 @@ import java.util.LinkedList;
 
 public abstract class BasicHolder {
 
-    private LinkedList<GameObject> gameObjectLinkedList;
+    protected LinkedList<GameObject> gameObjectLinkedList;
 
     public BasicHolder() {
         gameObjectLinkedList = new LinkedList<>();
     }
 
-    public void update(){
-        for(int i = 0; i < gameObjectLinkedList.size(); i++){
-            gameObjectLinkedList.get(i).update();
-        }
-    }
+    public abstract void update();
 
     public void draw(Graphics g){
         for(int i = 0; i < gameObjectLinkedList.size(); i++){

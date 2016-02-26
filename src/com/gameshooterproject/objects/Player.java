@@ -3,7 +3,6 @@ package com.gameshooterproject.objects;
 import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.main.Window;
 import com.gameshooterproject.objects.core.Walker;
-import com.gameshooterproject.objects.core.Weapon;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

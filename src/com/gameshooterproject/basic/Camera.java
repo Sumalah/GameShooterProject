@@ -13,11 +13,15 @@ public class Camera {
     private LinkedList<GameObject> allObjectsList;
     private GameMapHolder gameMapHolder;
     private WalkersHolder walkersHolder;
+    private BulletsHolder bulletsHolder;
+    private CrateHolder crateHolder;
     private Player player;
 
-    public Camera(GameMapHolder gameMapHolder, WalkersHolder walkersHolder) {
+    public Camera(GameMapHolder gameMapHolder, WalkersHolder walkersHolder, BulletsHolder bulletsHolder, CrateHolder crateHolder) {
         this.gameMapHolder = gameMapHolder;
         this.walkersHolder = walkersHolder;
+        this.bulletsHolder = bulletsHolder;
+        this.crateHolder = crateHolder;
 
         getAllObjects();
     }
@@ -25,11 +29,14 @@ public class Camera {
     private void getAllObjects() {
         allObjectsList = new LinkedList<>();
         player = walkersHolder.getPlayer();
+
         LinkedList<GameObject> walkersList = walkersHolder.getGameObjectLinkedList();
         LinkedList<GameObject> mapObjectsList = gameMapHolder.getGameObjectLinkedList();
+        LinkedList<GameObject> bulletsList = bulletsHolder.getGameObjectLinkedList();
+        LinkedList<GameObject> crateList = crateHolder.getGameObjectLinkedList();
 
         for(int i = 0; i < walkersList.size(); i++){
-            Walker tempWalker = (Walker)walkersList.get(i);
+            GameObject tempWalker = walkersList.get(i);
             if(tempWalker.getId() != ID.Player){
                 allObjectsList.add(tempWalker);
             }
@@ -38,6 +45,16 @@ public class Camera {
         for(int i = 0; i < mapObjectsList.size(); i++){
             GameObject tempMapObject = mapObjectsList.get(i);
             allObjectsList.add(tempMapObject);
+        }
+
+        for(int i = 0; i < bulletsList.size(); i++){
+            GameObject tempBulletObject = bulletsList.get(i);
+            allObjectsList.add(tempBulletObject);
+        }
+
+        for(int i = 0; i < crateList.size(); i++){
+            GameObject tempCrateObject = crateList.get(i);
+            allObjectsList.add(tempCrateObject);
         }
     }
 
