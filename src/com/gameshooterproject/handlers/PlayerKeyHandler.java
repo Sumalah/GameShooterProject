@@ -9,13 +9,11 @@ import java.awt.event.KeyEvent;
 
 public class PlayerKeyHandler extends KeyAdapter{
     Player player;
-    Weapon weapon;
 
     boolean keyUp, keyDown, keyLeft, keyRight, keySpacebar;
 
     public PlayerKeyHandler(Player player, BulletsHolder bulletsHolder) {
         this.player = player;
-        this.weapon = player.getWeapon();
 
         keyUp = false;
         keyDown = false;
@@ -46,7 +44,8 @@ public class PlayerKeyHandler extends KeyAdapter{
         }
         if(key == KeyEvent.VK_SPACE){
             keySpacebar = true;
-            weapon.setTriggerPressed(true);
+            player.getWeapon().setTriggerPressed(true);
+            System.out.println(player.getWeapon().getName());
         }
 
         if(keyUp){
@@ -78,7 +77,7 @@ public class PlayerKeyHandler extends KeyAdapter{
         }
         if(key == KeyEvent.VK_SPACE){
             keySpacebar = false;
-            weapon.setTriggerPressed(false);
+            player.getWeapon().setTriggerPressed(false);
         }
 
         if(!keyUp && !keyDown){

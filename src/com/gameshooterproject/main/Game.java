@@ -44,7 +44,7 @@ public class Game extends Canvas {
 
     private void initPlayer() {
         player = new Player(0, 0, 50, 50, ID.Player, 200);
-        weapon = new Weapon("Pistol", 2, 30, player, bulletsHolder);
+        weapon = new Weapon(0, 0, 0, 0, ID.Weapon, "Pistol", 10, 30, player, bulletsHolder);
         player.addWeapon(weapon);
 
         walkersHolder = new WalkersHolder(player);
@@ -56,9 +56,9 @@ public class Game extends Canvas {
     }
 
     private void initHandlers() {
-        spawner = new Spawner(walkersHolder, crateHolder);
+        spawner = new Spawner(walkersHolder, crateHolder, bulletsHolder);
         mainLoop.addKeyListener(new PlayerKeyHandler(player, bulletsHolder));
-        collisionHandler = new CollisionHandler(gameMapHolder, walkersHolder, bulletsHolder, crateHolder);
+        collisionHandler = new CollisionHandler(gameMapHolder, walkersHolder, bulletsHolder, crateHolder, spawner);
     }
 
     public static void main(String[] args) {
@@ -66,7 +66,7 @@ public class Game extends Canvas {
     }
 
     public void update(){
-        weapon.update();
+        player.getWeapon().update();
         spawner.update();
 
         gameMapHolder.update();

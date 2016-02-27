@@ -2,11 +2,14 @@ package com.gameshooterproject.objects;
 
 import com.gameshooterproject.basic.BulletsHolder;
 import com.gameshooterproject.basic.ID;
+import com.gameshooterproject.objects.core.GameObject;
 
+import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Weapon{
+public class Weapon extends GameObject{
+
     private String name;
     private int maxCooldown;
     private int actualCooldown;
@@ -16,8 +19,10 @@ public class Weapon{
     private Timer timer;
     private CountCooldown countCooldown;
     private boolean triggerPressed;
+    private boolean isOnGround;
 
-    public Weapon(String name, int maxCooldown, int damage, Player player, BulletsHolder bulletsHolder) {
+    public Weapon(int x, int y, int width, int height, ID id, String name, int maxCooldown, int damage, Player player, BulletsHolder bulletsHolder) {
+        super(x, y, width, height, id);
         this.name = name;
         this.maxCooldown = maxCooldown;
         this.damage = damage;
@@ -26,6 +31,7 @@ public class Weapon{
 
         this.timer = new Timer();
         this.triggerPressed = false;
+        this.isOnGround = false;
 
         actualCooldown = 0;
     }
@@ -36,6 +42,14 @@ public class Weapon{
                 Bullet bullet = shootBullet(player.getDirection(), player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2);
                 bulletsHolder.addNewObject(bullet);
             }
+        }
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        if(isOnGround()){
+            g.setColor(Color.black);
+            g.fillRect(x, y, width, height);
         }
     }
 
@@ -51,7 +65,7 @@ public class Weapon{
 
         cooldownCounter();
 
-        return new Bullet(x, y, 5, 10, ID.Bullet, this.damage, direction);
+        return new Bullet(x, y, 2, 10, ID.Bullet, this.damage, direction);
     }
 
     public boolean readyToShot() {
@@ -69,6 +83,22 @@ public class Weapon{
 
     public void setTriggerPressed(boolean triggerPressed) {
         this.triggerPressed = triggerPressed;
+    }
+
+    public boolean isOnGround() {
+        return isOnGround;
+    }
+
+    public void setOnGround(boolean onGround) {
+        isOnGround = onGround;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

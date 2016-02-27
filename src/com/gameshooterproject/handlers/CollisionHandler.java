@@ -3,6 +3,8 @@ package com.gameshooterproject.handlers;
 import com.gameshooterproject.basic.*;
 import com.gameshooterproject.objects.GameMap;
 import com.gameshooterproject.objects.Bullet;
+import com.gameshooterproject.objects.Player;
+import com.gameshooterproject.objects.Weapon;
 import com.gameshooterproject.objects.core.GameObject;
 import com.gameshooterproject.objects.core.Walker;
 
@@ -16,6 +18,7 @@ public class CollisionHandler {
     private final int RECTANGLE_AND_OVAL = 1;
 
     private GameMap gameMap;
+    private Spawner spawner;
     private GameMapHolder gameMapHolder;
     private WalkersHolder walkersHolder;
     private BulletsHolder bulletsHolder;
@@ -25,7 +28,8 @@ public class CollisionHandler {
     LinkedList<GameObject> mapObjectsList;
     LinkedList<GameObject> crateObjectList;
 
-    public CollisionHandler(GameMapHolder gameMapHolder, WalkersHolder walkersHolder, BulletsHolder bulletsHolder, CrateHolder crateHolder) {
+    public CollisionHandler(GameMapHolder gameMapHolder, WalkersHolder walkersHolder, BulletsHolder bulletsHolder, CrateHolder crateHolder, Spawner spawner) {
+        this.spawner = spawner;
         this.gameMapHolder = gameMapHolder;
         this.walkersHolder = walkersHolder;
         this.bulletsHolder = bulletsHolder;
@@ -43,6 +47,21 @@ public class CollisionHandler {
         removeBulletsOutOfGameMap();
         removeBulletsWhichHitsObstacles();
         destroyCrateIfHit();
+        ifPlayerOnWeaponGetIt();
+    }
+
+    private void ifPlayerOnWeaponGetIt() {
+        for(int i = 0; i < crateObjectList.size(); i++){
+            GameObject weaponObject = crateObjectList.get(i);
+            Player player = walkersHolder.getPlayer();
+
+            if(weaponObject.getId() == ID.Weapon){
+                if(isCollision(weaponObject, player, RECTANGLE_AND_OVAL)){
+                    player.addWeapon((Weapon)weaponObject);
+                    crateObjectList.remove(weaponObject);
+                }
+            }
+        }
     }
 
     private void destroyCrateIfHit() {
@@ -51,9 +70,13 @@ public class CollisionHandler {
 
             for(int i = 0; i < crateObjectList.size(); i++){
                 GameObject crateObject = crateObjectList.get(i);
-                if(isCollision(tempBullet, crateObject, TWO_RECTANGLES)){
-                    crateHolder.removeObject(crateObject);
-                    bulletsHolder.removeObject(tempBullet);
+
+                if(crateObject.getId() == ID.Crate) {
+                    if (isCollision(tempBullet, crateObject, TWO_RECTANGLES)) {
+                        crateHolder.removeObject(crateObject);
+                        bulletsHolder.removeObject(tempBullet);
+                        spawner.setSpawnWeapon(true);
+                    }
                 }
             }
         }
