@@ -45,7 +45,6 @@ public class PlayerKeyHandler extends KeyAdapter{
         if(key == KeyEvent.VK_SPACE){
             keySpacebar = true;
             player.getWeapon().setTriggerPressed(true);
-            System.out.println(player.getWeapon().getName());
         }
 
         if(keyUp){

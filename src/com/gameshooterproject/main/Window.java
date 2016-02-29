@@ -27,8 +27,6 @@ public class Window extends Canvas {
 
         WIDTH = frame.getContentPane().getWidth();
         HEIGHT = frame.getContentPane().getHeight();
-
-        mainLoop.start();
     }
 
 }

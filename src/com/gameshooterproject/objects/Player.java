@@ -1,20 +1,27 @@
 package com.gameshooterproject.objects;
 
 import com.gameshooterproject.basic.ID;
+import com.gameshooterproject.graphics.BufferedImageLoader;
 import com.gameshooterproject.main.Window;
 import com.gameshooterproject.objects.core.Walker;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 public class Player extends Walker {
 
     private boolean playerCenterVertically;
     private boolean playerCenterHorizontally;
     private Weapon weapon;
+    private BufferedImage image = null;
 
     public Player(int x, int y, int width, int height, ID id, int health) {
         super(x, y, width, height, id, health);
+
+        BufferedImageLoader loader = new BufferedImageLoader();
+        image = loader.loadImage("res/circle-star-small-white.png");
+
         centerPlayer();
     }
 
@@ -49,7 +56,8 @@ public class Player extends Walker {
         AffineTransform old = g2d.getTransform();
         g2d.setColor(Color.WHITE);
         g2d.rotate(Math.toRadians(-1 * direction), x + (width/2), y + (height / 2));
-        g2d.fillOval(x, y, width, height);
+//        g2d.fillOval(x, y, width, height);
+        g2d.drawImage(image, x, y, null);
         g2d.fillRect(x+(width/2)-3, y+height - 5, 5, 20);
         g2d.setTransform(old);  // after that nothing will be rotated
     }

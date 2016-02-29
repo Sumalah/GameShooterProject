@@ -1,6 +1,7 @@
 package com.gameshooterproject.main;
 
 import com.gameshooterproject.basic.*;
+import com.gameshooterproject.graphics.BufferedImageLoader;
 import com.gameshooterproject.handlers.CollisionHandler;
 import com.gameshooterproject.handlers.PlayerKeyHandler;
 import com.gameshooterproject.handlers.Spawner;
@@ -9,6 +10,7 @@ import com.gameshooterproject.objects.Player;
 import com.gameshooterproject.objects.Weapon;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Game extends Canvas {
     MainLoop mainLoop;
@@ -30,6 +32,9 @@ public class Game extends Canvas {
 
         initGameObjects();
         initHandlers();
+
+        mainLoop.start();
+
     }
 
     private void initGameObjects() {

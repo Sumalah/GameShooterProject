@@ -8,9 +8,11 @@ public class MainLoop extends Canvas implements Runnable{
     private Game game;
     private Thread thread;
     private boolean running = false;
+    private boolean readyToRender;
 
     public MainLoop(Game game){
         this.game = game;
+        readyToRender = false;
     }
 
     public synchronized  void start(){
@@ -49,6 +51,10 @@ public class MainLoop extends Canvas implements Runnable{
         bs.show();
     }
 
+    public void setReadyToRender(boolean value){
+        this.readyToRender = value;
+    }
+
     @Override
     public void run() {
         this.requestFocus();
@@ -63,15 +69,16 @@ public class MainLoop extends Canvas implements Runnable{
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
-            while(delta >= 1){
+            while (delta >= 1) {
                 update();
                 delta--;
             }
-            if(running)
+            if (running) {
                 render();
+            }
             frames++;
 
-            if(System.currentTimeMillis() - timer > 1000){
+            if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
                 System.out.println("Fps: " + frames);
                 frames = 0;
