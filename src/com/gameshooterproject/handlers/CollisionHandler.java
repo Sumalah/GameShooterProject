@@ -28,12 +28,12 @@ public class CollisionHandler {
     LinkedList<GameObject> mapObjectsList;
     LinkedList<GameObject> crateObjectList;
 
-    public CollisionHandler(GameMapHolder gameMapHolder, WalkersHolder walkersHolder, BulletsHolder bulletsHolder, CrateHolder crateHolder, Spawner spawner) {
+    public CollisionHandler(GeneralHolder generalHolder, Spawner spawner) {
         this.spawner = spawner;
-        this.gameMapHolder = gameMapHolder;
-        this.walkersHolder = walkersHolder;
-        this.bulletsHolder = bulletsHolder;
-        this.crateHolder = crateHolder;
+        this.gameMapHolder = generalHolder.getGameMapHolder();
+        this.walkersHolder = generalHolder.getWalkersHolder();
+        this.bulletsHolder = generalHolder.getBulletsHolder();
+        this.crateHolder = generalHolder.getCrateHolder();
         this.gameMap = gameMapHolder.getGameMap();
 
         walkerLinkedList = walkersHolder.getGameObjectLinkedList();

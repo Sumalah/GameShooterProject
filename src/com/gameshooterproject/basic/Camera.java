@@ -17,11 +17,11 @@ public class Camera {
     private CrateHolder crateHolder;
     private Player player;
 
-    public Camera(GameMapHolder gameMapHolder, WalkersHolder walkersHolder, BulletsHolder bulletsHolder, CrateHolder crateHolder) {
-        this.gameMapHolder = gameMapHolder;
-        this.walkersHolder = walkersHolder;
-        this.bulletsHolder = bulletsHolder;
-        this.crateHolder = crateHolder;
+    public Camera(GeneralHolder generalHolder) {
+        this.gameMapHolder = generalHolder.getGameMapHolder();
+        this.walkersHolder = generalHolder.getWalkersHolder();
+        this.bulletsHolder = generalHolder.getBulletsHolder();
+        this.crateHolder = generalHolder.getCrateHolder();
 
         getAllObjects();
     }

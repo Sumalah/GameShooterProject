@@ -18,6 +18,7 @@ public class Game extends Canvas {
     GameMapHolder gameMapHolder;
     WalkersHolder walkersHolder;
     BulletsHolder bulletsHolder;
+    GeneralHolder generalHolder;
     CrateHolder crateHolder;
     GameMap gameMap;
     Player player;
@@ -43,8 +44,9 @@ public class Game extends Canvas {
         initPlayer();
         initMap();
 
+        generalHolder = new GeneralHolder(bulletsHolder, crateHolder, gameMapHolder, walkersHolder);
         hud = new HUD(50, 50, 100, 25, ID.Hud, player);
-        camera = new Camera(gameMapHolder, walkersHolder, bulletsHolder, crateHolder);
+        camera = new Camera(generalHolder);
     }
 
     private void initPlayer() {
@@ -61,9 +63,9 @@ public class Game extends Canvas {
     }
 
     private void initHandlers() {
-        spawner = new Spawner(walkersHolder, crateHolder, bulletsHolder);
+        spawner = new Spawner(generalHolder);
         mainLoop.addKeyListener(new PlayerKeyHandler(player, bulletsHolder));
-        collisionHandler = new CollisionHandler(gameMapHolder, walkersHolder, bulletsHolder, crateHolder, spawner);
+        collisionHandler = new CollisionHandler(generalHolder, spawner);
     }
 
     public static void main(String[] args) {
@@ -74,10 +76,7 @@ public class Game extends Canvas {
         player.getWeapon().update();
         spawner.update();
 
-        gameMapHolder.update();
-        walkersHolder.update();
-        bulletsHolder.update();
-        crateHolder.update();
+        generalHolder.update();
 
         collisionHandler.update();
         hud.update();
@@ -85,10 +84,7 @@ public class Game extends Canvas {
     }
 
     public void draw(Graphics g){
-        gameMapHolder.draw(g);
-        walkersHolder.draw(g);
-        bulletsHolder.draw(g);
-        crateHolder.draw(g);
+        generalHolder.draw(g);
         hud.draw(g);
     }
 }
