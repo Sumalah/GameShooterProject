@@ -1,4 +1,4 @@
-package com.gameshooterproject.basic;
+package com.gameshooterproject.holders;
 
 
 import com.gameshooterproject.objects.GameMapField;

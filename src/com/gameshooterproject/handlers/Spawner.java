@@ -1,6 +1,10 @@
 package com.gameshooterproject.handlers;
 
 import com.gameshooterproject.basic.*;
+import com.gameshooterproject.holders.BulletsHolder;
+import com.gameshooterproject.holders.CrateHolder;
+import com.gameshooterproject.holders.GeneralHolder;
+import com.gameshooterproject.holders.WalkersHolder;
 import com.gameshooterproject.main.Window;
 import com.gameshooterproject.objects.BasicZombie;
 import com.gameshooterproject.objects.Crate;
@@ -13,7 +17,7 @@ import java.util.Random;
 public class Spawner {
 
     WalkersHolder walkersHolder;
-    CrateHolder  crateHolder;
+    CrateHolder crateHolder;
     BulletsHolder bulletsHolder;
     Player player;
     Random random;

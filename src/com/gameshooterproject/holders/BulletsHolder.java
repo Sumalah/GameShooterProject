@@ -1,4 +1,4 @@
-package com.gameshooterproject.basic;
+package com.gameshooterproject.holders;
 
 public class BulletsHolder extends BasicHolder{
 

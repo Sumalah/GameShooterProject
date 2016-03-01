@@ -1,5 +1,6 @@
-package com.gameshooterproject.basic;
+package com.gameshooterproject.handlers;
 
+import com.gameshooterproject.holders.GeneralHolder;
 import com.gameshooterproject.objects.core.GameObject;
 
 import java.util.LinkedList;

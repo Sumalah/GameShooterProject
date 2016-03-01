@@ -1,7 +1,7 @@
 package com.gameshooterproject.basic;
 
 public enum ID {
-    Map(),
+    MapField(),
     MapObstacles(),
     BasicZombie,
     Player(),

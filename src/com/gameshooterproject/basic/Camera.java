@@ -1,5 +1,6 @@
 package com.gameshooterproject.basic;
 
+import com.gameshooterproject.holders.GeneralHolder;
 import com.gameshooterproject.main.Window;
 import com.gameshooterproject.objects.GameMapField;
 import com.gameshooterproject.objects.Player;
@@ -47,7 +48,7 @@ public class Camera {
     }
 
     private void updatePlayerCameraLock() {
-        GameMapField map = (GameMapField)getObject(ID.Map);
+        GameMapField map = (GameMapField)getObject(ID.MapField);
 
         if(screenBorderConnectsWithMapTopOrBottom(map)){
             player.setPlayerCenterVertically(false);

@@ -21,7 +21,7 @@ public class Bullet extends GameObject {
 
     @Override
     public void update() {
-        updateWalkerOffset();
+        updateBulletOffset();
         moveByYOffset(offsetY);
         moveByXOffset(offsetX);
     }
@@ -36,7 +36,7 @@ public class Bullet extends GameObject {
         g2d.setTransform(old);  // after that nothing will be rotated
     }
 
-    protected void updateWalkerOffset() {
+    protected void updateBulletOffset() {
         offsetX = (int)(vel * Math.sin(Math.toRadians(direction)));
         offsetY = (int)(vel * Math.cos(Math.toRadians(direction)));
     }

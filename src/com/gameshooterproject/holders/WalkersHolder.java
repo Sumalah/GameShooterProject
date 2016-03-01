@@ -1,5 +1,6 @@
-package com.gameshooterproject.basic;
+package com.gameshooterproject.holders;
 
+import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.objects.Player;
 import com.gameshooterproject.objects.core.Walker;
 
@@ -24,6 +25,8 @@ public class WalkersHolder extends BasicHolder{
 
     @Override
     public void update() {
+        player.getWeapon().update();
+
         for(int i = 0; i < gameObjectLinkedList.size(); i++){
             Walker walker = (Walker) gameObjectLinkedList.get(i);
             walker.update();

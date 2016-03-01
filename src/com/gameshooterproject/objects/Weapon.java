@@ -1,6 +1,6 @@
 package com.gameshooterproject.objects;
 
-import com.gameshooterproject.basic.BulletsHolder;
+import com.gameshooterproject.holders.BulletsHolder;
 import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.objects.core.GameObject;
 

@@ -1,6 +1,7 @@
 package com.gameshooterproject.handlers;
 
 import com.gameshooterproject.basic.*;
+import com.gameshooterproject.holders.*;
 import com.gameshooterproject.objects.GameMapField;
 import com.gameshooterproject.objects.Bullet;
 import com.gameshooterproject.objects.Player;
@@ -23,31 +24,86 @@ public class CollisionHandler {
     private WalkersHolder walkersHolder;
     private BulletsHolder bulletsHolder;
     private CrateHolder crateHolder;
+
     private LinkedList<GameObject> walkerLinkedList;
-    private LinkedList<GameObject> bullets;
+    private LinkedList<GameObject> bulletsList;
     private LinkedList<GameObject> mapObjectsList;
     private LinkedList<GameObject> crateObjectList;
 
     public CollisionHandler(GeneralHolder generalHolder, Spawner spawner) {
         this.spawner = spawner;
+
         this.gameMapHolder = generalHolder.getGameMapHolder();
         this.walkersHolder = generalHolder.getWalkersHolder();
         this.bulletsHolder = generalHolder.getBulletsHolder();
         this.crateHolder = generalHolder.getCrateHolder();
+
         this.gameMapField = gameMapHolder.getGameMapField();
 
         walkerLinkedList = walkersHolder.getGameObjectLinkedList();
-        bullets = bulletsHolder.getGameObjectLinkedList();
+        bulletsList = bulletsHolder.getGameObjectLinkedList();
         mapObjectsList = gameMapHolder.getGameObjectLinkedList();
         crateObjectList = crateHolder.getGameObjectLinkedList();
     }
 
     public void update() {
-        handleWalkersCollisions();
-        removeBulletsOutOfGameMap();
-        removeBulletsWhichHitsObstacles();
-        destroyCrateIfHit();
+        handleWalkers();
+        handleBullets();
+
         ifPlayerOnWeaponGetIt();
+    }
+
+    private void handleWalkers() {
+        for(int i = 0; i < walkerLinkedList.size(); i++) {
+            Walker walker = (Walker) walkerLinkedList.get(i);
+
+            keepWalkerInGameMap(walker);
+            keepWalkerAwayFromObstacles(walker);
+            checkIfWalkerHitByBullet(walker);
+        }
+    }
+
+    private void handleBullets() {
+        for(int i = 0; i < bulletsList.size(); i++) {
+            Bullet bullet = (Bullet) bulletsList.get(i);
+
+            removeBulletIfOutOfGameMap(bullet);
+            removeBulletsWhichHitsObstacles(bullet);
+            destroyCratesHitByBullet(bullet);
+        }
+    }
+
+    private void removeBulletIfOutOfGameMap(Bullet bullet) {
+        if((bullet.getX() < gameMapField.getX() || bullet.getX() > gameMapField.getX() + gameMapField.getWidth())
+                || (bullet.getY() < gameMapField.getY() || bullet.getY() > gameMapField.getY() + gameMapField.getHeight())){
+            bulletsHolder.removeObject(bullet);
+        }
+    }
+
+    private void removeBulletsWhichHitsObstacles(Bullet bullet) {
+        for(int i = 0; i < mapObjectsList.size(); i++){
+            GameObject mapObject = mapObjectsList.get(i);
+
+            if(mapObject.getId() != ID.MapField){
+                if(isCollision(bullet, mapObject, TWO_RECTANGLES)){
+                    bulletsHolder.removeObject(bullet);
+                }
+            }
+        }
+    }
+
+    private void destroyCratesHitByBullet(Bullet bullet) {
+        for(int i = 0; i < crateObjectList.size(); i++){
+            GameObject crateObject = crateObjectList.get(i);
+
+            if(crateObject.getId() == ID.Crate) {
+                if (isCollision(bullet, crateObject, TWO_RECTANGLES)) {
+                    crateHolder.removeObject(crateObject);
+                    bulletsHolder.removeObject(bullet);
+                    spawner.setSpawnWeapon(true);
+                }
+            }
+        }
     }
 
     private void ifPlayerOnWeaponGetIt() {
@@ -64,69 +120,15 @@ public class CollisionHandler {
         }
     }
 
-    private void destroyCrateIfHit() {
-        for(int j = 0; j < bullets.size(); j++){
-            Bullet tempBullet = (Bullet)bullets.get(j);
-
-            for(int i = 0; i < crateObjectList.size(); i++){
-                GameObject crateObject = crateObjectList.get(i);
-
-                if(crateObject.getId() == ID.Crate) {
-                    if (isCollision(tempBullet, crateObject, TWO_RECTANGLES)) {
-                        crateHolder.removeObject(crateObject);
-                        bulletsHolder.removeObject(tempBullet);
-                        spawner.setSpawnWeapon(true);
-                    }
-                }
-            }
-        }
-    }
-
-    private void removeBulletsWhichHitsObstacles() {
-        for(int j = 0; j < bullets.size(); j++){
-            Bullet tempBullet = (Bullet)bullets.get(j);
-
-            for(int i = 0; i < mapObjectsList.size(); i++){
-                GameObject mapObstacle = mapObjectsList.get(i);
-                if(mapObstacle.getId() != ID.Map){
-                    if(isCollision(tempBullet, mapObstacle, TWO_RECTANGLES)){
-                        bulletsHolder.removeObject(tempBullet);
-                    }
-                }
-            }
-        }
-    }
-
-    private void handleWalkersCollisions() {
-        for(int i = 0; i < walkerLinkedList.size(); i++) {
-            Walker walker = (Walker)walkerLinkedList.get(i);
-
-            keepWalkerInGameMap(walker);
-            keepWalkerAwayFromObstacles(walker);
-            checkIfWalkerHitByBullet(walker);
-        }
-    }
-
     private void checkIfWalkerHitByBullet(Walker walker) {
-        for(int j = 0; j < bullets.size(); j++){
-            Bullet tempBullet = (Bullet)bullets.get(j);
+        for(int j = 0; j < bulletsList.size(); j++){
+            Bullet tempBullet = (Bullet) bulletsList.get(j);
 
             if(isCollision(tempBullet, walker, RECTANGLE_AND_OVAL)){
                 if(walker.getId() == ID.BasicZombie) {
                     walker.takeDamage(tempBullet.damage);
-                    bullets.remove(tempBullet);
+                    bulletsList.remove(tempBullet);
                 }
-            }
-        }
-    }
-
-    private void removeBulletsOutOfGameMap() {
-        for(int i = 0; i < bullets.size(); i++){
-            Bullet bullet = (Bullet) bullets.get(i);
-
-            if((bullet.getX() < gameMapField.getX() || bullet.getX() > gameMapField.getX() + gameMapField.getWidth())
-                    || (bullet.getY() < gameMapField.getY() || bullet.getY() > gameMapField.getY() + gameMapField.getHeight())){
-                bulletsHolder.removeObject(bullet);
             }
         }
     }
@@ -190,55 +192,48 @@ public class CollisionHandler {
     }
 
     private void keepWalkerInGameMap(Walker walker) {
-            if(isWalkerCrossingTopLine(walker)){
+        int walkerY = walker.getY();
+        int walkerX = walker.getX();
+        int walkerHeight = walker.getHeight();
+        int walkerWidth = walker.getWidth();
+
+            if(isWalkerCrossingTopLine(walkerY, walkerHeight)){
                 walker.setOffsetY(1);
             }
-            if(isWalkerCrossingBottomLine(walker)){
+            if(isWalkerCrossingBottomLine(walkerY, walkerHeight)){
                 walker.setOffsetY(-1);
             }
-            if(isWalkerCrossingLeftLine(walker)){
+            if(isWalkerCrossingLeftLine(walkerX, walkerWidth)){
                 walker.setOffsetX(1);
             }
-            if(isWalkerCrossingRightLine(walker)){
+            if(isWalkerCrossingRightLine(walkerX, walkerWidth)){
                 walker.setOffsetX(-1);
             }
     }
 
-    private boolean isWalkerCrossingTopLine(Walker walker) {
-        int walkerY = walker.getY();
-        int walkerHeight = walker.getHeight();
-
-        if(walkerY - walkerHeight < gameMapField.getY()){
+    private boolean isWalkerCrossingTopLine(int y, int height) {
+        if(y - height < gameMapField.getY()){
             return true;
         }
         return false;
     }
 
-    private boolean isWalkerCrossingBottomLine(Walker walker) {
-        int walkerY = walker.getY();
-        int walkerHeight = walker.getHeight();
-
-        if(walkerY +  walkerHeight > gameMapField.getY() + gameMapField.getHeight()){
+    private boolean isWalkerCrossingBottomLine(int y, int height) {
+        if(y +  height > gameMapField.getY() + gameMapField.getHeight()){
             return true;
         }
         return false;
     }
 
-    private boolean isWalkerCrossingLeftLine(Walker walker) {
-        int walkerX = walker.getX();
-        int walkerWidth = walker.getWidth();
-
-        if(walkerX - walkerWidth < gameMapField.getX()){
+    private boolean isWalkerCrossingLeftLine(int x, int width) {
+        if(x - width < gameMapField.getX()){
             return true;
         }
         return false;
     }
 
-    private boolean isWalkerCrossingRightLine(Walker walker) {
-        int walkerX = walker.getX();
-        int walkerWidth = walker.getWidth();
-
-        if(walkerX +  walkerWidth > gameMapField.getX() + gameMapField.getWidth()){
+    private boolean isWalkerCrossingRightLine(int x, int width) {
+        if(x +  width > gameMapField.getX() + gameMapField.getWidth()){
             return true;
         }
         return false;

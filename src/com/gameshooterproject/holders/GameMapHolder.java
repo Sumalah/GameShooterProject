@@ -1,5 +1,6 @@
-package com.gameshooterproject.basic;
+package com.gameshooterproject.holders;
 
+import com.gameshooterproject.basic.ID;
 import com.gameshooterproject.objects.GameMapField;
 import com.gameshooterproject.objects.mapelements.MapObstacle;
 

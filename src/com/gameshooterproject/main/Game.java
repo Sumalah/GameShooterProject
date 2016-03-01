@@ -4,6 +4,7 @@ import com.gameshooterproject.basic.*;
 import com.gameshooterproject.handlers.CollisionHandler;
 import com.gameshooterproject.handlers.PlayerKeyHandler;
 import com.gameshooterproject.handlers.Spawner;
+import com.gameshooterproject.holders.GeneralHolder;
 import com.gameshooterproject.objects.GameMapField;
 import com.gameshooterproject.objects.Player;
 import com.gameshooterproject.objects.Weapon;
@@ -38,7 +39,7 @@ public class Game extends Canvas {
 
     private void initPlayerAndMapField() {
         player = new Player(0, 0, 50, 50, ID.Player, 200);
-        gameMapField = new GameMapField(0, 0, 0, 0, ID.Map);
+        gameMapField = new GameMapField(0, 0, 0, 0, ID.MapField);
     }
 
     private void initMainComponents() {
