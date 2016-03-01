@@ -1,7 +1,12 @@
 package com.gameshooterproject.basic;
 
 
+import com.gameshooterproject.objects.GameMapField;
+import com.gameshooterproject.objects.Player;
+import com.gameshooterproject.objects.core.GameObject;
+
 import java.awt.*;
+import java.util.LinkedList;
 
 public class GeneralHolder {
 
@@ -10,11 +15,11 @@ public class GeneralHolder {
     private GameMapHolder gameMapHolder;
     private WalkersHolder walkersHolder;
 
-    public GeneralHolder(BulletsHolder bulletsHolder, CrateHolder crateHolder, GameMapHolder gameMapHolder, WalkersHolder walkersHolder) {
-        this.bulletsHolder = bulletsHolder;
-        this.crateHolder = crateHolder;
-        this.gameMapHolder = gameMapHolder;
-        this.walkersHolder = walkersHolder;
+    public GeneralHolder(Player player, GameMapField gameMapField) {
+        bulletsHolder = new BulletsHolder();
+        crateHolder = new CrateHolder();
+        walkersHolder = new WalkersHolder(player);
+        gameMapHolder = new GameMapHolder(gameMapField);
     }
 
     public void update(){
@@ -45,5 +50,16 @@ public class GeneralHolder {
 
     public WalkersHolder getWalkersHolder() {
         return walkersHolder;
+    }
+
+    public LinkedList<GameObject> getAll(){
+        LinkedList<GameObject> list = new LinkedList<>();
+
+        list.addAll(walkersHolder.getGameObjectLinkedList());
+        list.addAll(gameMapHolder.getGameObjectLinkedList());
+        list.addAll(bulletsHolder.getGameObjectLinkedList());
+        list.addAll(crateHolder.getGameObjectLinkedList());
+
+        return list;
     }
 }

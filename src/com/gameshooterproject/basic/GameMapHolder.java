@@ -1,15 +1,15 @@
 package com.gameshooterproject.basic;
 
-import com.gameshooterproject.objects.GameMap;
+import com.gameshooterproject.objects.GameMapField;
 import com.gameshooterproject.objects.mapelements.MapObstacle;
 
 public class GameMapHolder extends BasicHolder{
-    GameMap gameMap;
+    GameMapField gameMapField;
 
-    public GameMapHolder(GameMap gamemap) {
+    public GameMapHolder(GameMapField gameMapField) {
         super();
-        this.gameMap = gamemap;
-        addNewObject(gamemap);
+        this.gameMapField = gameMapField;
+        addNewObject(gameMapField);
         makeGameLevel();
     }
 
@@ -19,8 +19,8 @@ public class GameMapHolder extends BasicHolder{
         addNewObject(new MapObstacle(600, 600, 100, 500, ID.MapObstacles));
     }
 
-    public GameMap getGameMap(){
-        return gameMap;
+    public GameMapField getGameMapField(){
+        return gameMapField;
     }
 
     @Override

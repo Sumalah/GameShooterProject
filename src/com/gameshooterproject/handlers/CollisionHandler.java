@@ -1,7 +1,7 @@
 package com.gameshooterproject.handlers;
 
 import com.gameshooterproject.basic.*;
-import com.gameshooterproject.objects.GameMap;
+import com.gameshooterproject.objects.GameMapField;
 import com.gameshooterproject.objects.Bullet;
 import com.gameshooterproject.objects.Player;
 import com.gameshooterproject.objects.Weapon;
@@ -17,16 +17,16 @@ public class CollisionHandler {
     private final int TWO_RECTANGLES = 0;
     private final int RECTANGLE_AND_OVAL = 1;
 
-    private GameMap gameMap;
+    private GameMapField gameMapField;
     private Spawner spawner;
     private GameMapHolder gameMapHolder;
     private WalkersHolder walkersHolder;
     private BulletsHolder bulletsHolder;
     private CrateHolder crateHolder;
-    LinkedList<GameObject> walkerLinkedList;
-    LinkedList<GameObject> bullets;
-    LinkedList<GameObject> mapObjectsList;
-    LinkedList<GameObject> crateObjectList;
+    private LinkedList<GameObject> walkerLinkedList;
+    private LinkedList<GameObject> bullets;
+    private LinkedList<GameObject> mapObjectsList;
+    private LinkedList<GameObject> crateObjectList;
 
     public CollisionHandler(GeneralHolder generalHolder, Spawner spawner) {
         this.spawner = spawner;
@@ -34,7 +34,7 @@ public class CollisionHandler {
         this.walkersHolder = generalHolder.getWalkersHolder();
         this.bulletsHolder = generalHolder.getBulletsHolder();
         this.crateHolder = generalHolder.getCrateHolder();
-        this.gameMap = gameMapHolder.getGameMap();
+        this.gameMapField = gameMapHolder.getGameMapField();
 
         walkerLinkedList = walkersHolder.getGameObjectLinkedList();
         bullets = bulletsHolder.getGameObjectLinkedList();
@@ -124,8 +124,8 @@ public class CollisionHandler {
         for(int i = 0; i < bullets.size(); i++){
             Bullet bullet = (Bullet) bullets.get(i);
 
-            if((bullet.getX() < gameMap.getX() || bullet.getX() > gameMap.getX() + gameMap.getWidth())
-                    || (bullet.getY() < gameMap.getY() || bullet.getY() > gameMap.getY() + gameMap.getHeight())){
+            if((bullet.getX() < gameMapField.getX() || bullet.getX() > gameMapField.getX() + gameMapField.getWidth())
+                    || (bullet.getY() < gameMapField.getY() || bullet.getY() > gameMapField.getY() + gameMapField.getHeight())){
                 bulletsHolder.removeObject(bullet);
             }
         }
@@ -208,7 +208,7 @@ public class CollisionHandler {
         int walkerY = walker.getY();
         int walkerHeight = walker.getHeight();
 
-        if(walkerY - walkerHeight < gameMap.getY()){
+        if(walkerY - walkerHeight < gameMapField.getY()){
             return true;
         }
         return false;
@@ -218,7 +218,7 @@ public class CollisionHandler {
         int walkerY = walker.getY();
         int walkerHeight = walker.getHeight();
 
-        if(walkerY +  walkerHeight > gameMap.getY() + gameMap.getHeight()){
+        if(walkerY +  walkerHeight > gameMapField.getY() + gameMapField.getHeight()){
             return true;
         }
         return false;
@@ -228,7 +228,7 @@ public class CollisionHandler {
         int walkerX = walker.getX();
         int walkerWidth = walker.getWidth();
 
-        if(walkerX - walkerWidth < gameMap.getX()){
+        if(walkerX - walkerWidth < gameMapField.getX()){
             return true;
         }
         return false;
@@ -238,7 +238,7 @@ public class CollisionHandler {
         int walkerX = walker.getX();
         int walkerWidth = walker.getWidth();
 
-        if(walkerX +  walkerWidth > gameMap.getX() + gameMap.getWidth()){
+        if(walkerX +  walkerWidth > gameMapField.getX() + gameMapField.getWidth()){
             return true;
         }
         return false;

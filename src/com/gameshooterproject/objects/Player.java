@@ -40,6 +40,7 @@ public class Player extends Walker {
     public void update() {
         rotatePlayer();
         updateWalkerOffset();
+        weapon.update();
     }
 
     private void rotatePlayer() {

@@ -12,7 +12,7 @@ public class PlayerKeyHandler extends KeyAdapter{
 
     boolean keyUp, keyDown, keyLeft, keyRight, keySpacebar;
 
-    public PlayerKeyHandler(Player player, BulletsHolder bulletsHolder) {
+    public PlayerKeyHandler(Player player) {
         this.player = player;
 
         keyUp = false;

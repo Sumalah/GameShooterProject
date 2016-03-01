@@ -1,6 +1,5 @@
 package com.gameshooterproject.basic;
 
-import com.gameshooterproject.objects.BasicZombie;
 import com.gameshooterproject.objects.Player;
 import com.gameshooterproject.objects.core.Walker;
 

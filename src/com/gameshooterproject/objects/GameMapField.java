@@ -6,10 +6,10 @@ import com.gameshooterproject.objects.core.GameObject;
 
 import java.awt.*;
 
-public class GameMap extends GameObject {
+public class GameMapField extends GameObject {
     private final double mapScale = 2.0;
 
-    public GameMap(int x, int y, int width, int height, ID id){
+    public GameMapField(int x, int y, int width, int height, ID id){
         super(x, y, width, height, id);
 
         calculateAndInitMapDimensions();

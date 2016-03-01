@@ -1,61 +1,29 @@
 package com.gameshooterproject.basic;
 
 import com.gameshooterproject.main.Window;
-import com.gameshooterproject.objects.GameMap;
+import com.gameshooterproject.objects.GameMapField;
 import com.gameshooterproject.objects.Player;
 import com.gameshooterproject.objects.core.GameObject;
-import com.gameshooterproject.objects.core.Walker;
 
 import java.util.LinkedList;
 
 public class Camera {
 
     private LinkedList<GameObject> allObjectsList;
-    private GameMapHolder gameMapHolder;
-    private WalkersHolder walkersHolder;
-    private BulletsHolder bulletsHolder;
-    private CrateHolder crateHolder;
+    private GeneralHolder generalHolder;
     private Player player;
 
     public Camera(GeneralHolder generalHolder) {
-        this.gameMapHolder = generalHolder.getGameMapHolder();
-        this.walkersHolder = generalHolder.getWalkersHolder();
-        this.bulletsHolder = generalHolder.getBulletsHolder();
-        this.crateHolder = generalHolder.getCrateHolder();
+        this.generalHolder = generalHolder;
+        this.player = generalHolder.getWalkersHolder().getPlayer();
 
         getAllObjects();
     }
 
     private void getAllObjects() {
         allObjectsList = new LinkedList<>();
-        player = walkersHolder.getPlayer();
-
-        LinkedList<GameObject> walkersList = walkersHolder.getGameObjectLinkedList();
-        LinkedList<GameObject> mapObjectsList = gameMapHolder.getGameObjectLinkedList();
-        LinkedList<GameObject> bulletsList = bulletsHolder.getGameObjectLinkedList();
-        LinkedList<GameObject> crateList = crateHolder.getGameObjectLinkedList();
-
-        for(int i = 0; i < walkersList.size(); i++){
-            GameObject tempWalker = walkersList.get(i);
-            if(tempWalker.getId() != ID.Player){
-                allObjectsList.add(tempWalker);
-            }
-        }
-
-        for(int i = 0; i < mapObjectsList.size(); i++){
-            GameObject tempMapObject = mapObjectsList.get(i);
-            allObjectsList.add(tempMapObject);
-        }
-
-        for(int i = 0; i < bulletsList.size(); i++){
-            GameObject tempBulletObject = bulletsList.get(i);
-            allObjectsList.add(tempBulletObject);
-        }
-
-        for(int i = 0; i < crateList.size(); i++){
-            GameObject tempCrateObject = crateList.get(i);
-            allObjectsList.add(tempCrateObject);
-        }
+        allObjectsList.addAll(generalHolder.getAll());
+        allObjectsList.remove(player);
     }
 
     public void update(){
@@ -65,7 +33,7 @@ public class Camera {
     }
 
     private void moveObjectsOrPlayer() {
-        if(player.isPlayerCenterHorizontally()){
+        if (player.isPlayerCenterHorizontally()){
             moveEveryObjectExceptPlayerHorizontally();
         }else{
             movePlayerByX();
@@ -79,7 +47,7 @@ public class Camera {
     }
 
     private void updatePlayerCameraLock() {
-        GameMap map = (GameMap)getObject(ID.Map);
+        GameMapField map = (GameMapField)getObject(ID.Map);
 
         if(screenBorderConnectsWithMapTopOrBottom(map)){
             player.setPlayerCenterVertically(false);
@@ -128,10 +96,10 @@ public class Camera {
         return null;
     }
 
-    private boolean screenBorderConnectsWithMapTopOrBottom(GameMap gameMap) {
+    private boolean screenBorderConnectsWithMapTopOrBottom(GameMapField gameMapField) {
         int screenHalfHeight = (Window.HEIGHT / 2);
-        int playerDistanceToMapTop = (player.getY()) - (player.getHeight() / 2) - gameMap.getY();
-        int playerDistanceToMapBottom = (gameMap.getY() + gameMap.getHeight()) - (player.getY()) - (player.getHeight() / 2);
+        int playerDistanceToMapTop = (player.getY()) - (player.getHeight() / 2) - gameMapField.getY();
+        int playerDistanceToMapBottom = (gameMapField.getY() + gameMapField.getHeight()) - (player.getY()) - (player.getHeight() / 2);
 
         if(playerDistanceToMapTop <= screenHalfHeight){
             return true;
@@ -142,10 +110,10 @@ public class Camera {
         return false;
     }
 
-    private boolean screenBorderConnectsWithMapLeftOrRight(GameMap gameMap) {
+    private boolean screenBorderConnectsWithMapLeftOrRight(GameMapField gameMapField) {
         int screenHalfWidth = (Window.WIDTH / 2);
-        int playerDistanceToMapLeft = (player.getX()) - (player.getWidth() / 2) - gameMap.getX();
-        int playerDistanceToMapRight = (gameMap.getX() + gameMap.getWidth()) - (player.getX()) - (player.getWidth() / 2);
+        int playerDistanceToMapLeft = (player.getX()) - (player.getWidth() / 2) - gameMapField.getX();
+        int playerDistanceToMapRight = (gameMapField.getX() + gameMapField.getWidth()) - (player.getX()) - (player.getWidth() / 2);
 
         if(playerDistanceToMapLeft <= screenHalfWidth){
             return true;
@@ -154,9 +122,5 @@ public class Camera {
             return true;
         }
         return false;
-    }
-
-    public Player getPlayerObject(){
-        return player;
     }
 }
